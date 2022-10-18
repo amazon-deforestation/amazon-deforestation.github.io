@@ -2,23 +2,136 @@
 
 <html>
 	<head>
-		<title>Oldal cime</title>
+		<title>Deforestation</title>
+		<link rel="stylesheet" href="leaflet/leaflet.css" />
+		<script src="leaflet/leaflet.js"></script>
 		<style>
+		
 			html, body {
 				height: 100%;
 				margin: 0;
 				font-family: 'Open Sans', 'OpenSans-Local';
 				font-style: normal;
 			}
-			#valamidiv {
-				background-color: #ff0000;
+			#header {
+				background-color: #b6d7a8;
+				width: 100%;
+				height: 120px;
+			}
+			#header2 {
+				position: relative;
+				background-color: #6aa84f;
+				width: 100%;
+			}
+			#map {
+				width: 800px;
+				height: 600px;
 			}
 		</style>
 	</head>
 	<body>
-		szia
-		<script>				
+		Rapidly increasing deforestation of the Amazon rainforest
+		
+		
+		<ul>
+		<li>something</li>
+		<li>another something</li>
+		<li>more something</li>
+		</ul>
+		
+		<div id="header">
+			Project description
+			<div id="header2">
+				The Amazon is the largest tropical forest and offers many important ecosystem services, including the 
+				sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. 
+				Deforestation is one of the major threats that the Amazon is currently facing (Fig 1). Since the early 2000s 
+				the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier 
+				research has shown that deforestation can have a short positive effect on local communities (as expressed 
+				by the Human Development Index), but that this effect does not last for long.
+			</div>
+		</div>
+		
+		<div id="map">
+		</div>
+		
+		<iframe title="valami" aria-label="Interactive line chart" id="datawrapper-chart-Eeq02" src="https://datawrapper.dwcdn.net/Eeq02/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="400">
+		</iframe>
+		
+		<iframe title="[ area ]" aria-label="Map" id="datawrapper-chart-fkXGc" src="https://datawrapper.dwcdn.net/fkXGc/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="576"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+</script>
+		
+		
+		
+		
+		<script>		
+
+			function stilus(feature){
+				var p = feature.properties;
+				
+				if (p.sigla=="RO") {
+					return {
+						color: '#ffcc00'
+					}
+				} else {
+					return {
+						color: '#00cc00'
+					};
+				}
+			}
+		
+			function areastilus(feature){
+				var p = feature.properties;
+				
+				if (p.area > 27719162110) {
+					return {
+						color: 'red'
+					}
+				} else if (p.area > 23739064061) {
+					return {
+						color: 'orange'
+					};
+				} else if (p.area > 16391085419) {
+					return {
+						color: 'yellow'
+					};
+				} else if (p.area > 12449191587) {
+					return {
+						color: 'green'
+					};
+				} else {
+					return {
+						color: 'darkblue'
+					};
+				}
+			}
+		
+			// map div object, main Leaflet object:
+			var map = L.map('map').setView([-6.641224624683114,-55.6095886343115], 4);
 			
+			// base maps
+			var OSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map);
+			
+			// overlays
+			var x=new XMLHttpRequest();
+			x.open('get', 'data/states.geojson', false);
+			x.send();
+			var d=JSON.parse(x.responseText);
+			var states = L.geoJSON(d,{style: areastilus}).addTo(map);
+			
+			// list of base maps
+			var baseMaps = {
+				"OpenStreetMap": OSM
+			};
+			
+			// list of overlays
+			var overlayMaps = {
+				"Amazon states": states
+			};
+			
+			// layer switcher enable
+			var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 		</script>
 	</body>
 </html>

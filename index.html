@@ -3,37 +3,68 @@
 <html>
 	<head>
 		<title>Deforestation</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
 		<script src="leaflet/leaflet.js"></script>
 		<style>
-		
 			html, body {
 				height: 100%;
 				margin: 0;
 				font-family: 'Open Sans', 'OpenSans-Local';
 				font-style: normal;
 			}
+			p {
+				text-align: justify;
+			}
 			#header {
 				background-color: #b6d7a8;
 				width: 100%;
-				height: 120px;
 			}
 			#header2 {
 				position: relative;
 				background-color: #b6d7a8;
-				height: 60px;
 				width: 100%;
 			}
 			#map {
-				width: 800px;
-				height: 600px;
+				width: 100%;
+				height: 400px;
 			}
-			
+			.section {
+				padding-left: 60px;
+				padding-right: 60px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+			}
+			.imagesection {
+			}
+			.datawrapper_element {
+			  background-color: white;
+			  padding-top: 10px;
+			  padding-bottom: 10px;
+			  padding-left: 30px;
+			  padding-right: 30px;
+			}
+			.cim_a_kepen {
+				color: white; 
+				font-weight: bold; 
+				font-size: 40pt;
+				text-shadow: 2px 2px 5px #000000c7;
+			}
+			/* Scroll reveal animation: https://alvarotrigo.com/blog/css-animations-scroll/ */
+			.reveal {
+			  position: relative;
+			  transform: translateY(150px);
+			  opacity: 0;
+			  transition: 2s all ease;
+			}
+			.reveal.active{
+			  transform: translateY(0);
+			  opacity: 1;
+			}
 		</style>
 	</head>
 	<body>
-		<h1 style="font-size:40px">Rapidly increasing deforestation of the Amazon rainforest</h1>
-		
+		<h1 style="font-size:40px">Rapidly increasing deforestation of the Amazon rainforest</h1>		
 		
 		<ul>
 		<li>something</li>
@@ -41,45 +72,84 @@
 		<li>more something</li>
 		</ul>
 		
-		<div id="header">
-			<h1 style="font-size:30px">Project description</h1>
-			<div id="header2">
-				The Amazon is the largest tropical forest and offers many important ecosystem services, including the 
-				sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. 
-				Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s 
-				the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier 
-				research has shown that deforestation can have a short positive effect on local communities (as expressed 
-				by the Human Development Index), but that this effect does not last for long.
+		<div id="maincontent" style="display: flex; flex-direction: column; row-gap: 20px;">
+			<div id="header">
+				<h1 style="font-size:30px">Project description</h1>
+				<div id="header2">
+					The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.
+				</div>
+			</div>
+			
+			
+			<div id="imagesection1" class="imagesection reveal">
+				<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" class="cim_a_kepen">Title: Deforestation in the Amazon rainforest</div>
+				<img src="forest.jpg" style="max-width: 100%"></img>
+			</div>
+			
+			<div id="section0" class="section reveal">
+				<h2>States Map</h2>
+				<p>Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. </p>
+				<div id="map">
+				</div>
+			</div>
+			
+			<div id="section1" class="section reveal">
+				<h2>Deforestation by states (Legal Amazon)</h2>
+				<p>Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. </p>
+				<div id="diagram" class="datawrapper_element">
+					<iframe title="Deforestation increments by states - Legal Amazon 
+					" aria-label="Interactive line chart" id="datawrapper-chart-Hj5aG" src="https://datawrapper.dwcdn.net/Hj5aG/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="518"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+			</div>
+			
+			<div id="imagesection2" class="imagesection reveal">
+				<img src="fire.jpg" style="max-width: 100%"></img>
+			</div>
+			
+			<div id="section2" class="section reveal">
+				<h2>What is NIRv?</h2>
+				<p>Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. </p>
+				<div id="areamap" class="datawrapper_element">
+					<iframe title="[ area ]" aria-label="Map" id="datawrapper-chart-fkXGc" src="https://datawrapper.dwcdn.net/fkXGc/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="576"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+			</div>
+			
+			<div id="section3" class="section reveal">
+				<h2>NIRv over the years</h2>
+				<p>Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. Valami olyan szoveg, mely leirja mit latunk a tekepen, diagramon mittudomenmin. </p>
+				<div id="diagram2" class="datawrapper_element">
+					<iframe title="Annual NIRV " aria-label="Interactive line chart" id="datawrapper-chart-bjA3y" src="https://datawrapper.dwcdn.net/bjA3y/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="420"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
+			</div>
+
+			<div id="section4" class="section reveal">
+				<div id="diagram3" class="datawrapper_element">
+					<iframe title="ciiiiiiime a cucclinaaak" aria-label="Map" id="datawrapper-chart-xCBhx" src="https://datawrapper.dwcdn.net/xCBhx/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="703"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+				</div>
 			</div>
 		</div>
 		
-		<img src="minta.jpg" />
-		
-		<div id="map">
-		</div>
-		
-		<div id="diagram">
-			<iframe title="Deforestation increments by states - Legal Amazon 
-			" aria-label="Interactive line chart" id="datawrapper-chart-Hj5aG" src="https://datawrapper.dwcdn.net/Hj5aG/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="518"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
-			</script>
-		</div>
-		
-		
-		
-		<div id="areamap">
-			<iframe title="[ area ]" aria-label="Map" id="datawrapper-chart-fkXGc" src="https://datawrapper.dwcdn.net/fkXGc/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="576"></iframe>
-		</div>
-		
-		<script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
-		</script>
-		
-		<div id="diagram2">
-			<iframe title="Annual NIRV " aria-label="Interactive line chart" id="datawrapper-chart-bjA3y" src="https://datawrapper.dwcdn.net/bjA3y/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="420"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
-			</script>
-		</div>
-		
-		<script>		
+		<script>
+			// Scroll reveal animation: https://alvarotrigo.com/blog/css-animations-scroll/
+			function reveal() {
+			  var reveals = document.querySelectorAll(".reveal");
+			  for (var i = 0; i < reveals.length; i++) {
+				var windowHeight = window.innerHeight;
+				var elementTop = reveals[i].getBoundingClientRect().top;
+				var elementVisible = 150;
+				if (elementTop < windowHeight - elementVisible) {
+				  reveals[i].classList.add("active");
+				} else {
+				  reveals[i].classList.remove("active");
+				}
+			  }
+			}
+			
+			window.addEventListener("scroll", reveal);
 
+			// To check the scroll position on page load
+			reveal();
+		
 			function stilus(feature){
 				var p = feature.properties;
 				
@@ -119,9 +189,9 @@
 					};
 				}
 			}
-		
+			
 			// map div object, main Leaflet object:
-			var map = L.map('map').setView([-6.641224624683114,-55.6095886343115], 4);
+			var map = L.map('map').setView([-6.641224624683114,-55.6095886343115], 4); 
 			
 			// base maps
 			var OSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -147,6 +217,7 @@
 			
 			// layer switcher enable
 			var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+			
 		</script>
 	</body>
 </html>

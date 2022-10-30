@@ -6,6 +6,8 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
 		<script src="leaflet/leaflet.js"></script>
+		<link rel="stylesheet" href="leaflet/leaflet.fullscreen.css" />
+		<script src="leaflet/leaflet.fullscreen.js"></script>
 		<style>
 			html, body {
 				height: 100%;
@@ -30,8 +32,9 @@
 				width: 100%;
 			}
 			#map {
-				width: 100%;
+				width: 65%;
 				height: 400px;
+				margin:  auto;
 			}
 			.section {
 				padding-left: 60px;
@@ -68,7 +71,7 @@
 		</style>
 	</head>
 	<body>
-		<h1 style="font-size:40px; color:#373f27 ">Rapidly increasing deforestation of the Amazon rainforest</h1>	
+		<h1 style="font-size:40px;">Rapidly increasing deforestation of the Amazon rainforest</h1>	
 			
 		
 		<ul>
@@ -113,6 +116,7 @@
 			
 			<div id="section2" class="section reveal">
 				<h2>What is NIRv?</h2>
+				<iframe frameborder="0" class="juxtapose" width="600" height="360" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=5d1f9d30-551c-11ed-b5bd-6595d9b17862"></iframe>
 				<p>Valami ValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValami </p>
 				<div id="areamap" class="datawrapper_element">
 					<iframe title="[ area ]" aria-label="Map" id="datawrapper-chart-fkXGc" src="https://datawrapper.dwcdn.net/fkXGc/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="576"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
@@ -154,74 +158,211 @@
 
 			// To check the scroll position on page load
 			reveal();
-		
-			function stilus(feature){
-				var p = feature.properties;
-				
-				if (p.sigla=="RO") {
-					return {
-						color: '#ffcc00'
-					}
-				} else {
-					return {
-						color: '#00cc00'
-					};
-				}
+			
+			function areatokm2(value) {
+				result = value/1000000
+				return result
 			}
-		
-			function areastilus(feature){
+			
+			function tooltip_area(layer) {
+				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> area: " + areatokm2(layer.feature.properties.area).toFixed(2) + " km<sup>2</sup>";
+			}
+			function tooltip_deforestation(layer) {
+				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> deforestation: " + layer.feature.properties.deforestation_average_Average.toFixed(2) + " %";
+			}
+			function tooltip_nirv(layer) {
+				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> NIRv: " + layer.feature.properties.nirv_average_Average.toFixed(3);
+			}
+			function tooltip_population(layer) {
+				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> population: " + layer.feature.properties.population_average_average.toLocaleString();
+			}
+			function tooltip_gdp(layer) {
+				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> GDP (R$ 1000): " + layer.feature.properties.gdp_average_Average;
+			}
+			
+			function stilus_area(feature){
 				var p = feature.properties;
 				
 				if (p.area > 27719162110) {
 					return {
-						color: 'red'
+						color: '#004c4c'
 					}
 				} else if (p.area > 23739064061) {
 					return {
-						color: 'orange'
+						color: '#006666'
 					};
 				} else if (p.area > 16391085419) {
 					return {
-						color: 'yellow'
+						color: '#008080'
 					};
 				} else if (p.area > 12449191587) {
+					return {
+						color: '#66b2b2'
+					};
+				} else {
+					return {
+						color: '#b2d8d8'
+					};
+				}
+			}
+			
+			function stilus_deforestation(feature){
+				var p = feature.properties;
+				
+				if (p.deforestation_average_Average > 8.0892) {
+					return {
+						color: 'red'
+					}
+				} else if (p.deforestation_average_Average > 3.6333){
+					return {
+						color: 'orange'
+					};
+				} else if (p.deforestation_average_Average > 1.2308){
+					return {
+						color: 'yellow'
+					};
+				} else if (p.deforestation_average_Average > 0.4992){
 					return {
 						color: 'green'
 					};
 				} else {
 					return {
-						color: 'darkblue'
+						color: 'blue'
+					};
+				}
+			} 
+			
+			function stilus_nirv(feature){
+				var p = feature.properties;
+				
+				if (p.nirv_average_Average > 0.24327) {
+					return {
+						color: 'red'
+					}
+				} else if (p.nirv_average_Average > 0.22448){
+					return {
+						color: 'orange'
+					};
+				} else if (p.nirv_average_Average > 0.20270){
+					return {
+						color: 'yellow'
+					};
+				} else if (p.nirv_average_Average > 0.15988){
+					return {
+						color: 'green'
+					};
+				} else {
+					return {
+						color: 'blue'
 					};
 				}
 			}
 			
+			function stilus_population(feature){
+				var p = feature.properties;
+				
+				if (p.population_average_average > 6468043) {
+					return {
+						color: 'red'
+					}
+				} else if (p.population_average_average > 3067893){
+					return {
+						color: 'orange'
+					};
+				} else if (p.population_average_average > 742535){
+					return {
+						color: 'yellow'
+					};
+				} else if (p.population_average_average > 483369){
+					return {
+						color: 'green'
+					};
+				} else {
+					return {
+						color: 'blue'
+					};
+				}
+			}
+			
+			function stilus_gdp(feature){
+				var p = feature.properties;
+				
+				if (p.gdp_average_Average > 98751895.61) {
+					return {
+						color: 'red'
+					}
+				} else if (p.gdp_average_Average > 72120267.52){
+					return {
+						color: 'orange'
+					};
+				} else if (p.gdp_average_Average > 26250552.77){
+					return {
+						color: 'yellow'
+					};
+				} else if (p.gdp_average_Average > 9736747.76){
+					return {
+						color: 'green'
+					};
+				} else {
+					return {
+						color: 'blue'
+					};
+				}
+			}
+			
+			
+			function mousehighlight (feature, layer) {
+					// when hover over the feature, highlight it
+					layer.on('mouseover', function () {
+						this.setStyle({
+							'weight': '5',
+							'fillOpacity': '0.6'
+						});
+					});
+					// when we go off the feature, return to default style
+					layer.on('mouseout', function () {
+						this.setStyle({
+							'fillColor': feature.properties.fillColor,
+							'weight': '3',
+							'fillOpacity': '0.2'
+						});
+					});
+				}
+				
+				
 			// map div object, main Leaflet object:
 			var map = L.map('map').setView([-6.641224624683114,-55.6095886343115], 4); 
+			map.addControl(new L.Control.Fullscreen());
 			
 			// base maps
 			var OSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(map);
 			
-			// overlays
+			// overlays			
 			var x=new XMLHttpRequest();
-			x.open('get', 'data/states.geojson', false);
+			x.open('get', 'data/main_map.geojson', false);
 			x.send();
 			var d=JSON.parse(x.responseText);
-			var states = L.geoJSON(d,{style: areastilus}).addTo(map);
+			var mainmap_area = L.geoJSON(d,{style: stilus_area, onEachFeature: mousehighlight}).bindTooltip(tooltip_area);
+			var mainmap_deforestation = L.geoJSON(d,{style: stilus_deforestation, onEachFeature: mousehighlight}).bindTooltip(tooltip_deforestation);
+			var mainmap_nirv = L.geoJSON(d,{style: stilus_nirv, onEachFeature: mousehighlight}).bindTooltip(tooltip_nirv);
+			var mainmap_population = L.geoJSON(d,{style: stilus_population, onEachFeature: mousehighlight}).bindTooltip(tooltip_population);
+			var mainmap_gdp = L.geoJSON(d,{style: stilus_gdp, onEachFeature: mousehighlight}).bindTooltip(tooltip_gdp);
 			
-			// list of base maps
-			var baseMaps = {
-				"OpenStreetMap": OSM
-			};
+			// we add the default layer to map to show when page is opened:
+				mainmap_area.addTo(map)
 			
 			// list of overlays
 			var overlayMaps = {
-				"Amazon states": states
+				"Research area (az uj, az adatokkal)": mainmap_area,
+				"Deforestation % (az uj, az adatokkal)": mainmap_deforestation,
+				"NirV (az uj, az adatokkal)": mainmap_nirv,
+				"Population (az uj, az adatokkal)": mainmap_population,
+				"GDP (az uj, az adatokkal)": mainmap_gdp
 			};
-			
 			// layer switcher enable
-			var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+			var layerControl = L.control.layers(overlayMaps, null, {collapsed:false}).addTo(map);
 			
 		</script>
 	</body>

@@ -21,24 +21,15 @@
 			p {
 				text-align: justify;
 			}
-			#header {
-				background-color: #b6d7a8;
-				width: 100%;
-				
-			}
-			#header2 {
-				position: relative;
-				background-color: #b6d7a8;
-				width: 100%;
-			}
+			
 			#map {
 				width: 65%;
 				height: 400px;
 				margin:  auto;
 			}
 			.section {
-				padding-left: 60px;
-				padding-right: 60px;
+				padding-left: 250px;
+				padding-right: 250px;
 				padding-top: 5px;
 				padding-bottom: 5px;
 			}
@@ -54,7 +45,7 @@
 			.cim_a_kepen {
 				color: white; 
 				font-weight: bold; 
-				font-size: 40pt;
+				font-size: 15pt;
 				text-shadow: 2px 2px 5px #000000c7;
 			}
 			/* Scroll reveal animation: https://alvarotrigo.com/blog/css-animations-scroll/ */
@@ -68,42 +59,49 @@
 			  transform: translateY(0);
 			  opacity: 1;
 			}
+			#topbar {
+				background-color: white;
+				width: 100%;
+				top: 0;
+				height: 150px;
+				padding-top: 24px;
+				padding-bottom: 24px;
+				padding-left: 38px;
+				padding-right: 38px;
+			}
 		</style>
 	</head>
 	<body>
-		<h1 style="font-size:40px;">Rapidly increasing deforestation of the Amazon rainforest</h1>	
-			
 		
-		<ul>
-		<li>something</li>
-		<li>another something</li>
-		<li>more something</li>
-		</ul>
-		
-		<div id="maincontent" style="display: flex; flex-direction: column; row-gap: 20px;">
-			<div id="header">
-				<h1 style="font-size:30px">Project description</h1>
-				<div id="header2">
-					The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.
+		<div id="topbar">
+			<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+				<img src="stop.jpg" style="height: 130px"></img>
+				<h1 style="font-size:20px;">Rapidly increasing deforestation of the Amazon rainforest</h1>
+				<div style="display: flex; flex-direction: row; column-gap: 20px;">
+					<a href="#section1">Deforestation by states</a>
+					<a href="https://www.w3schools.com">Visit W3Schools</a>
+					<a href="https://www.w3schools.com">Visit W3Schools</a>
 				</div>
 			</div>
+		</div>
 			
+		<div id="maincontent" style="display: flex; flex-direction: column; row-gap: 20px;">			
 			
 			<div id="imagesection1" class="imagesection reveal">
-				<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" class="cim_a_kepen">Title: Deforestation in the Amazon rainforest</div>
+				<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" class="cim_a_kepen">The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</div>
 				<img src="forest.jpg" style="max-width: 100%"></img>
 			</div>
 			
 			<div id="section0" class="section reveal">
 				<h2>States Map</h2>
-				<p>Valami ValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValami Valami ValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValami ValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValami ValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValami </p>
+				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long. </p>
 				<div id="map">
 				</div>
 			</div>
 			
 			<div id="section1" class="section reveal">
 				<h2>Deforestation by states (Legal Amazon)</h2>
-				<p>Valami ValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValamiValami </p>
+				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.  </p>
 				<div id="diagram" class="datawrapper_element">
 					<iframe title="Deforestation increments by states - Legal Amazon 
 					" aria-label="Interactive line chart" id="datawrapper-chart-Hj5aG" src="https://datawrapper.dwcdn.net/Hj5aG/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="518"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
@@ -345,10 +343,15 @@
 			x.send();
 			var d=JSON.parse(x.responseText);
 			var mainmap_area = L.geoJSON(d,{style: stilus_area, onEachFeature: mousehighlight}).bindTooltip(tooltip_area);
+				mainmap_area.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
 			var mainmap_deforestation = L.geoJSON(d,{style: stilus_deforestation, onEachFeature: mousehighlight}).bindTooltip(tooltip_deforestation);
+				mainmap_deforestation.getAttribution = function() { return 'valami'; };
 			var mainmap_nirv = L.geoJSON(d,{style: stilus_nirv, onEachFeature: mousehighlight}).bindTooltip(tooltip_nirv);
+				mainmap_nirv.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
 			var mainmap_population = L.geoJSON(d,{style: stilus_population, onEachFeature: mousehighlight}).bindTooltip(tooltip_population);
+				mainmap_population.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
 			var mainmap_gdp = L.geoJSON(d,{style: stilus_gdp, onEachFeature: mousehighlight}).bindTooltip(tooltip_gdp);
+				mainmap_gdp.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
 			
 			// we add the default layer to map to show when page is opened:
 				mainmap_area.addTo(map)

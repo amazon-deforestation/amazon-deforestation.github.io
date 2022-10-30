@@ -329,8 +329,11 @@
 				
 				
 			// map div object, main Leaflet object:
-			var map = L.map('map').setView([-6.641224624683114,-55.6095886343115], 4); 
+			var map = L.map('map',{maxBounds: L.latLngBounds(L.latLng(-29.935789, -94.974456), L.latLng(22.153948, -27.264859)),
+								maxBoundsViscosity: 1.0
+									}).setView([-6.641224624683114,-55.6095886343115], 4); 
 			map.addControl(new L.Control.Fullscreen());
+			map.scrollWheelZoom.disable();
 			
 			// base maps
 			var OSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -358,11 +361,11 @@
 			
 			// list of overlays
 			var overlayMaps = {
-				"Research area (az uj, az adatokkal)": mainmap_area,
-				"Deforestation % (az uj, az adatokkal)": mainmap_deforestation,
-				"NirV (az uj, az adatokkal)": mainmap_nirv,
-				"Population (az uj, az adatokkal)": mainmap_population,
-				"GDP (az uj, az adatokkal)": mainmap_gdp
+				"Research area ": mainmap_area,
+				"Deforestation % ": mainmap_deforestation,
+				"NirV ": mainmap_nirv,
+				"Population ": mainmap_population,
+				"GDP ": mainmap_gdp
 			};
 			// layer switcher enable
 			var layerControl = L.control.layers(overlayMaps, null, {collapsed:false}).addTo(map);

@@ -8,6 +8,13 @@
 		<script src="leaflet/leaflet.js"></script>
 		<link rel="stylesheet" href="leaflet/leaflet.fullscreen.css" />
 		<script src="leaflet/leaflet.fullscreen.js"></script>
+		<script src="leaflet/leaflet.fullscreen.js"></script>
+		<script src="highcharts/highcharts.js"></script>
+		<script src="highcharts/sankey.js"></script>
+		<script src="highcharts/dependency-wheel.js"></script>
+		<script src="highcharts/exporting.js"></script>
+		<script src="highcharts/export-data.js"></script>
+		<script src="highcharts/accessibility.js"></script>
 		<style>
 			html, body {
 				height: 100%;
@@ -69,6 +76,47 @@
 				padding-left: 38px;
 				padding-right: 38px;
 			}
+			
+			/* Highcharts */
+			.highcharts-data-table table {
+				font-family: Verdana, sans-serif;
+				border-collapse: collapse;
+				border: 1px solid #ebebeb;
+				margin: 10px auto;
+				text-align: center;
+				width: 100%;
+				max-width: 500px;
+			}
+
+			.highcharts-data-table caption {
+				padding: 1em 0;
+				font-size: 1.2em;
+				color: #555;
+			}
+
+			.highcharts-data-table th {
+				font-weight: 600;
+				padding: 0.5em;
+			}
+
+			.highcharts-data-table td,
+			.highcharts-data-table th,
+			.highcharts-data-table caption {
+				padding: 0.5em;
+			}
+
+			.highcharts-data-table thead tr,
+			.highcharts-data-table tr:nth-child(even) {
+				background: #f8f8f8;
+			}
+
+			.highcharts-data-table tr:hover {
+				background: #f1f7ff;
+			}
+
+			#csv {
+				display: none;
+			}
 		</style>
 	</head>
 	<body>
@@ -100,6 +148,15 @@
 			</div>
 			
 			<div id="section1" class="section reveal">
+				<figure class="highcharts-figure">
+					<div id="container"></div>
+						<p class="highcharts-description">
+							Chart showing a dependency wheel, where each point consists of multiple
+							weighted links to other points. This chart type is often used to
+							visualize data flow, and can be a striking way to illustrate
+							elationships in data.
+						</p>
+				</figure>
 				<h2>Deforestation by states (Legal Amazon)</h2>
 				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.  </p>
 				<div id="diagram" class="datawrapper_element">
@@ -183,23 +240,23 @@
 				
 				if (p.area > 27719162110) {
 					return {
-						color: '#004c4c'
+						color: '#05014a'
 					}
 				} else if (p.area > 23739064061) {
 					return {
-						color: '#006666'
+						color: '#020079'
 					};
 				} else if (p.area > 16391085419) {
 					return {
-						color: '#008080'
+						color: '#0006b1'
 					};
-				} else if (p.area > 12449191587) {
+				} else if (p.area > 12449191588) {
 					return {
-						color: '#66b2b2'
+						color: '#0013de'
 					};
 				} else {
 					return {
-						color: '#b2d8d8'
+						color: '#0021f3'
 					};
 				}
 			}
@@ -209,23 +266,23 @@
 				
 				if (p.deforestation_average_Average > 8.0892) {
 					return {
-						color: 'red'
+						color: '#000000'
 					}
 				} else if (p.deforestation_average_Average > 3.6333){
 					return {
-						color: 'orange'
+						color: '#400000'
 					};
 				} else if (p.deforestation_average_Average > 1.2308){
 					return {
-						color: 'yellow'
+						color: '#800000'
 					};
-				} else if (p.deforestation_average_Average > 0.4992){
+				} else if (p.deforestation_average_Average > 0.4993){
 					return {
-						color: 'green'
+						color: '#bf0000'
 					};
 				} else {
 					return {
-						color: 'blue'
+						color: '#ff0000'
 					};
 				}
 			} 
@@ -235,23 +292,23 @@
 				
 				if (p.nirv_average_Average > 0.24327) {
 					return {
-						color: 'red'
+						color: '#000c00'
 					}
 				} else if (p.nirv_average_Average > 0.22448){
 					return {
-						color: 'orange'
+						color: '#004000'
 					};
 				} else if (p.nirv_average_Average > 0.20270){
 					return {
-						color: 'yellow'
+						color: '#008000'
 					};
-				} else if (p.nirv_average_Average > 0.15988){
+				} else if (p.nirv_average_Average > 0.15989){
 					return {
-						color: 'green'
+						color: '#7fbf7f'
 					};
 				} else {
 					return {
-						color: 'blue'
+						color: '#e5f2e5'
 					};
 				}
 			}
@@ -261,23 +318,23 @@
 				
 				if (p.population_average_average > 6468043) {
 					return {
-						color: 'red'
+						color: '#4c4c00'
 					}
 				} else if (p.population_average_average > 3067893){
 					return {
-						color: 'orange'
+						color: '#7f7f00'
 					};
 				} else if (p.population_average_average > 742535){
 					return {
-						color: 'yellow'
+						color: '#b2b200'
 					};
-				} else if (p.population_average_average > 483369){
+				} else if (p.population_average_average > 483370){
 					return {
-						color: 'green'
+						color: '#e5e500'
 					};
 				} else {
 					return {
-						color: 'blue'
+						color: '#ffff00'
 					};
 				}
 			}
@@ -287,23 +344,23 @@
 				
 				if (p.gdp_average_Average > 98751895.61) {
 					return {
-						color: 'red'
+						color: '#111111'
 					}
 				} else if (p.gdp_average_Average > 72120267.52){
 					return {
-						color: 'orange'
+						color: '#333333'
 					};
 				} else if (p.gdp_average_Average > 26250552.77){
 					return {
-						color: 'yellow'
+						color: '#555555'
 					};
-				} else if (p.gdp_average_Average > 9736747.76){
+				} else if (p.gdp_average_Average > 9736747.77){
 					return {
-						color: 'green'
+						color: '#777777'
 					};
 				} else {
 					return {
-						color: 'blue'
+						color: '#999999'
 					};
 				}
 			}
@@ -321,7 +378,7 @@
 					layer.on('mouseout', function () {
 						this.setStyle({
 							'fillColor': feature.properties.fillColor,
-							'weight': '3',
+							'weight': '4',
 							'fillOpacity': '0.2'
 						});
 					});
@@ -348,13 +405,13 @@
 			var mainmap_area = L.geoJSON(d,{style: stilus_area, onEachFeature: mousehighlight}).bindTooltip(tooltip_area);
 				mainmap_area.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
 			var mainmap_deforestation = L.geoJSON(d,{style: stilus_deforestation, onEachFeature: mousehighlight}).bindTooltip(tooltip_deforestation);
-				mainmap_deforestation.getAttribution = function() { return 'valami'; };
+				mainmap_deforestation.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
 			var mainmap_nirv = L.geoJSON(d,{style: stilus_nirv, onEachFeature: mousehighlight}).bindTooltip(tooltip_nirv);
-				mainmap_nirv.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
+				mainmap_nirv.getAttribution = function() { return 'By Gerbrand'; };
 			var mainmap_population = L.geoJSON(d,{style: stilus_population, onEachFeature: mousehighlight}).bindTooltip(tooltip_population);
-				mainmap_population.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
+				mainmap_population.getAttribution = function() { return 'Instituto Brasileiro de Geografia e Estatística - IBGE'; };
 			var mainmap_gdp = L.geoJSON(d,{style: stilus_gdp, onEachFeature: mousehighlight}).bindTooltip(tooltip_gdp);
-				mainmap_gdp.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
+				mainmap_gdp.getAttribution = function() { return 'Instituto Brasileiro de Geografia e Estatística - IBGE'; };
 			
 			// we add the default layer to map to show when page is opened:
 				mainmap_area.addTo(map)
@@ -369,6 +426,73 @@
 			};
 			// layer switcher enable
 			var layerControl = L.control.layers(overlayMaps, null, {collapsed:false}).addTo(map);
+			
+			
+			// HIGHCHARTS - DEPENDENCY WHEEL:
+			Highcharts.chart('container', {
+
+				title: {
+					text: 'Correlation among social and natural factors'
+				},
+				
+				subtitle: {
+					text: 'Subtitle is something'
+				},
+
+				// tooltip lower row format
+				tooltip: {
+					//pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+					//pointFormat: '{index}. From {point.from} to {point.to}: {point.weight} {point.mas}'
+					pointFormat: 'Correlation between {point.from} and {point.to}: {point.source}'
+				},
+				
+				accessibility: {
+					point: {
+						valueDescriptionFormat: 'Correlation between {point.from} and {point.to}: {point.source}.'
+					}
+				},
+
+				series: [{
+					type: 'dependencywheel',
+					name: 'Dependency wheel series', 				// appears on top of tooltip, indicating the series name
+					cursor: 'pointer',								// make cursor a pointer cursor when hovering over the chart
+					keys: ['from', 'to', 'weight', 'source'],
+					data: [
+						['valami', 'masvalami', 0.5, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['mittudomenmi', 'masvalami', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['wildfires', 'mittudomenmi', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['wildfires', 'hogy allnak epp a csillagok', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['wildfires', 'valami', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['logging', 'hogy allnak epp a csillagok', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['logging', 'valami', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['logging', 'masvalami', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['hogy allnak epp a csillagok', 'valami', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['valami', 'logging', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
+						['valami', 'hogy allnak epp a csillagok', 1]
+					],
+					dashStyle: 'longdash',
+					dataLabels: {
+						color: '#333',
+						style: {
+							textOutline: 'none'
+						},
+						textPath: {
+							enabled: true
+						},
+						distance: 10
+					},
+					size: '95%',
+					events: {
+						click: function (event) {
+							// on click of a relation, open the reference URL (paper, literature) from field "source", if it exists:
+							if (event.point.source != null) {
+								window.open(event.point.source, "_blank");hááááhhh
+							}
+						}
+					}
+				}]
+
+			});
 			
 		</script>
 	</body>

@@ -75,6 +75,8 @@
 				padding-bottom: 24px;
 				padding-left: 38px;
 				padding-right: 38px;
+				display: flex;
+				box-sizing: border-box;
 			}
 			
 			/* Highcharts */
@@ -122,7 +124,7 @@
 	<body>
 		
 		<div id="topbar">
-			<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+			<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%">
 				<img src="stop.jpg" style="height: 130px"></img>
 				<h1 style="font-size:20px;">Rapidly increasing deforestation of the Amazon rainforest</h1>
 				<div style="display: flex; flex-direction: row; column-gap: 20px;">
@@ -470,7 +472,6 @@
 						['valami', 'logging', 1, 'https://www.researchgate.net/publication/347306942_Quality_assessment_of_the_PRODES_Cerrado_deforestation_data'],
 						['valami', 'hogy allnak epp a csillagok', 1]
 					],
-					dashStyle: 'longdash',
 					dataLabels: {
 						color: '#333',
 						style: {

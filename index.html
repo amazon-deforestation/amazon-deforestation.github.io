@@ -228,7 +228,10 @@
 				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> deforestation: " + layer.feature.properties.deforestation_average_Average.toFixed(2) + " %";
 			}
 			function tooltip_nirv(layer) {
-				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> NIRv: " + layer.feature.properties.nirv_average_Average.toFixed(3);
+				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> NIRV: " + layer.feature.properties.nirv_average_Average.toFixed(3);
+			}
+			function tooltip_precip(layer) {
+				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> precipitation: " + layer.feature.properties.precip_by_states_2001_2019_VAL.toFixed(3);
 			}
 			function tooltip_population(layer) {
 				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> population: " + layer.feature.properties.population_average_average.toLocaleString();
@@ -311,6 +314,32 @@
 				} else {
 					return {
 						color: '#e5f2e5'
+					};
+				}
+			}
+			
+			function stilus_precip(feature){
+				var p = feature.properties;
+				
+				if (p.precip_by_states_2001_2019_VAL > 7.0007) {
+					return {
+						color: '#beeb1d'
+					}
+				} else if (p.precip_by_states_2001_2019_VAL > 5.0864){
+					return {
+						color: '#d1ff00'
+					};
+				} else if (p.precip_by_states_2001_2019_VAL > 4.0013){
+					return {
+						color: '#d9ff00'
+					};
+				} else if (p.precip_by_states_2001_2019_VAL > 3.2645){
+					return {
+						color: '#f6f43e'
+					};
+				} else {
+					return {
+						color: '#feff63'
 					};
 				}
 			}
@@ -401,7 +430,7 @@
 			
 			// overlays			
 			var x=new XMLHttpRequest();
-			x.open('get', 'data/main_map.geojson', false);
+			x.open('get', 'data/main_map_1.geojson', false);
 			x.send();
 			var d=JSON.parse(x.responseText);
 			var mainmap_area = L.geoJSON(d,{style: stilus_area, onEachFeature: mousehighlight}).bindTooltip(tooltip_area);
@@ -410,6 +439,8 @@
 				mainmap_deforestation.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
 			var mainmap_nirv = L.geoJSON(d,{style: stilus_nirv, onEachFeature: mousehighlight}).bindTooltip(tooltip_nirv);
 				mainmap_nirv.getAttribution = function() { return 'By Gerbrand'; };
+			var mainmap_precip = L.geoJSON(d,{style: stilus_precip, onEachFeature: mousehighlight}).bindTooltip(tooltip_precip);
+				mainmap_precip.getAttribution = function() { return 'By Gerbrand'; };
 			var mainmap_population = L.geoJSON(d,{style: stilus_population, onEachFeature: mousehighlight}).bindTooltip(tooltip_population);
 				mainmap_population.getAttribution = function() { return 'Instituto Brasileiro de Geografia e Estatística - IBGE'; };
 			var mainmap_gdp = L.geoJSON(d,{style: stilus_gdp, onEachFeature: mousehighlight}).bindTooltip(tooltip_gdp);
@@ -423,6 +454,7 @@
 				"Research area ": mainmap_area,
 				"Deforestation % ": mainmap_deforestation,
 				"NirV ": mainmap_nirv,
+				"Precipitation": mainmap_precip,
 				"Population ": mainmap_population,
 				"GDP ": mainmap_gdp
 			};

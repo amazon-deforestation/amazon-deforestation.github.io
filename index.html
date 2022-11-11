@@ -119,6 +119,34 @@
 			#csv {
 				display: none;
 			}
+			
+			/* Legends */
+			.legend {
+				display: flex; 
+				flex-direction: row; 
+				justify-content: flex-start; 
+				grid-column-gap: 10px;
+			}
+			.legend span {
+				position: relative;
+				bottom: 3px;
+				margin-top: 6px;
+			}
+			.legendcolumnlist {
+				display: flex; 
+				flex-direction: column; 
+				justify-content: center; 
+				grid-row-gap: 1px;
+			}
+			.legenditem {
+				display: flex; 
+				flex-direction: row; 
+				align-items: center;
+			}
+			.custom-control {
+				background-color: #FFFFFFDD; 
+				padding: 6px 8px;
+			}
 		</style>
 	</head>
 	<body>
@@ -524,9 +552,66 @@
 						}
 					}
 				}]
-
+			
 			});
 			
+
+			setLegend([areatokm2(27719162110).toFixed(2), areatokm2(23739064061).toFixed(2), areatokm2(16391085419).toFixed(2), areatokm2(12449191588).toFixed(2)], ['#05014a', '#020079', '#0006b1', '#0013de', '#0021f3']);	
+			
+			function setLegend(values, colors){
+				legend = L.control({position: 'bottomright'});
+				legend.onAdd = function(map) {
+					var div = L.DomUtil.create("div");
+					var content = '<div id="legenddiv" class="leaflet-bar custom-control legend">';
+						content += '<div class="legendcolumnlist">';
+							content += '<div class="legenditem">';
+								content += '<div style="background-color: '+colors[0]+'; width: 27px; height: 16px; margin-right: 5px;"></div>';
+								content += '<span>'+values[0]+' - </span>';
+							content += '</div>';
+							content += '<div class="legenditem">';
+								content += '<div style="background-color: '+colors[1]+'; width: 27px; height: 16px; margin-right: 5px;"></div>';
+								content += '<span>'+values[1]+' - '+values[0]+'</span>';
+							content += '</div>';
+							content += '<div class="legenditem">';
+								content += '<div style="background-color: '+colors[2]+'; width: 27px; height: 16px; margin-right: 5px;"></div>';
+								content += '<span>'+values[2]+' - '+values[1]+'</span>';
+							content += '</div>';
+							content += '<div class="legenditem">';
+								content += '<div style="background-color: '+colors[3]+'; width: 27px; height: 16px; margin-right: 5px;"></div>';
+								content += '<span>'+values[3]+' - '+values[2]+'</span>';
+							content += '</div>';
+							content += '<div class="legenditem">';
+								content += '<div style="background-color: '+colors[4]+'; width: 27px; height: 16px; margin-right: 5px;"></div>';
+								content += '<span> - '+values[3]+'</span>';
+							content += '</div>';
+						content += '</div>';
+					content += '</div>';
+					
+					div.innerHTML = content;
+					  
+					return div;
+					
+				};
+				legend.addTo(map);
+			};
+			
+			map.on('baselayerchange', function (e) {
+				map.removeControl(legend);
+				if (e.name === 'Research area ') {
+					setLegend([areatokm2(27719162110).toFixed(2), areatokm2(23739064061).toFixed(2), areatokm2(16391085419).toFixed(2), areatokm2(12449191588).toFixed(2)], ['#05014a', '#020079', '#0006b1', '#0013de', '#0021f3']);
+				} else if (e.name === 'Deforestation % ') {
+					setLegend([8.0892.toFixed(2), 3.6333.toFixed(2), 1.2308.toFixed(2), 0.4993.toFixed(2)], ['#000000', '#400000', '#800000', '#bf0000', '#ff0000']);
+				} else if (e.name === 'NirV ') {
+					setLegend([0.24327.toFixed(2),0.22448.toFixed(2),0.20270.toFixed(2),0.15989.toFixed(2)], ['#000c00', '#004000', '#008000', '#7fbf7f', '#e5f2e5']);
+				} else if (e.name === 'Precipitation') {
+					setLegend([7.0007.toFixed(3), 5.0864.toFixed(3), 4.0013.toFixed(3), 3.2645.toFixed(3)], ['#beeb1d', '#d1ff00', '#d9ff00', '#f6f43e', '#feff63']);
+				} else if (e.name === 'Population ') {
+					setLegend([parseInt(6468043).toLocaleString(), parseInt(3067893).toLocaleString(), parseInt(742535).toLocaleString(), parseInt(483370).toLocaleString()], ['#4c4c00', '#7f7f00', '#b2b200', '#e5e500', '#ffff00']);
+				} else if (e.name === 'GDP ') {
+					setLegend([98751895.61, 72120267.52, 26250552.77, 9736747.77], ['#111111', '#333333', '#555555', '#777777', '#999999']);
+				}
+					
+			});
 		</script>
 	</body>
 </html>

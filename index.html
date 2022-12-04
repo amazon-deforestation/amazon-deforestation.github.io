@@ -501,7 +501,7 @@
 				"Deforestation % ": mainmap_deforestation,
 				"NirV ": mainmap_nirv,
 				"Precipitation": mainmap_precip,
-				"Population ": mainmap_population,
+				"Population density": mainmap_population,
 				"GDP ": mainmap_gdp
 			};
 			
@@ -601,7 +601,7 @@
 						click: function (event) {
 							// on click of a relation, open the reference URL (paper, literature) from field "source", if it exists:
 							if (event.point.source != null) {
-								window.open(event.point.source, "_blank");hááááhhh
+								window.open(event.point.source, "_blank");
 							}
 						}
 					}
@@ -612,9 +612,10 @@
 
 			setLegend([areatokm2(27719162110).toFixed(2), areatokm2(23739064061).toFixed(2), areatokm2(16391085419).toFixed(2), areatokm2(12449191588).toFixed(2)], ['#05014a', '#020079', '#0006b1', '#0013de', '#0021f3']);	
 			
+			// STATIC MAP: LEGEND for values
 			function setLegend(values, colors){
-				legend = L.control({position: 'bottomright'});
-				legend.onAdd = function(map) {
+				legend_mainmap = L.control({position: 'bottomright'});
+				legend_mainmap.onAdd = function(map) {
 					var div = L.DomUtil.create("div");
 					var content = '<div id="legenddiv" class="leaflet-bar custom-control legend">';
 						content += '<div class="legendcolumnlist">';
@@ -646,19 +647,18 @@
 					return div;
 					
 				};
-				legend.addTo(map);
+				legend_mainmap.addTo(map);
 			};
 			
-			// LEGEND for GRADIENTS
-			function setLegend_gradient(values, colors){
-				console.log(colors)
-				legend = L.control({position: 'bottomright'});
-				legend.onAdd = function(map) {
+			// STATIC MAP: LEGEND for GRADIENTS
+			function setLegend_gradient(values, unit, colors, targetmap){
+				legend_mainmap = L.control({position: 'bottomright'});
+				legend_mainmap.onAdd = function(map) {
 					var div = L.DomUtil.create("div");
 					var content = '<div id="legenddiv" class="leaflet-bar custom-control legend">';
-						content += '<div style="display: flex; flex-direction: column; margin-top: 4px;">';
-							content += '<div style="background: linear-gradient(to right, '+colors[0]+', '+colors[1]+'); width: 60px; height: 14px;"></div>';
-							content += '<div style="display: flex; flex-direction: row; justify-content: space-between;"><span>'+values[0]+'</span><span>'+values[1]+'</span></div>';
+						content += '<div style="display: flex; flex-direction: column; margin-top: 4px; width: 130px;">';
+							content += '<div style="background: linear-gradient(to right, '+colors[0]+', '+colors[1]+'); width: 100%; height: 14px;"></div>';
+							content += '<div style="display: flex; flex-direction: row; justify-content: space-between;"><span>'+values[0]*1000+'</span><span>'+values[1]*1000+'</span></div><div style="display: flex; flex-direction: row; justify-content: center;">'+unit+'</div>';
 						content += '</div>';
 					content += '</div>';
 					 
@@ -667,12 +667,12 @@
 					return div;
 					
 				};
-				legend.addTo(map);
+				legend_mainmap.addTo(map);
 			};
 			
 			
 			map.on('baselayerchange', function (e) {
-				map.removeControl(legend);
+				map.removeControl(legend_mainmap);
 				if (e.name === 'Research area ') {
 					setLegend([areatokm2(27719162110).toFixed(2), areatokm2(23739064061).toFixed(2), areatokm2(16391085419).toFixed(2), areatokm2(12449191588).toFixed(2)], ['#05014a', '#020079', '#0006b1', '#0013de', '#0021f3']);
 				} else if (e.name === 'Deforestation % ') {
@@ -686,39 +686,13 @@
 				} else if (e.name === 'GDP ') {
 					setLegend([98751895.61, 72120267.52, 26250552.77, 9736747.77], ['#111111', '#333333', '#555555', '#777777', '#999999']);
 				} else if (e.name === 'NIRV RASTER') {
-					setLegend_gradient([0,1], chroma.scale(['white', 'green']).colors(2)); // first param is labels: [mix, max], second param is the colors from-to (min, then max)
+					setLegend_gradient([0,1], 'km/h', chroma.scale(['white', 'green']).colors(2), map); // first param is labels: [mix, max], second param is the colors from-to (min, then max)
 				}
 			});
 			
-			//////////////////////////////
-			// DYNAMIC DATA, ANIMATED MAP:
-			//////////////////////////////
-			
-						
-			function stilus(feature){
-				var value = feature.properties["deforestation _"+datum]
-				if (value > 0.4) {
-					return {
-						color: '#000c00'
-					}
-				} else if (value > 0.1){
-					return {
-						color: '#004000'
-					};
-				} else if (value > 0.02){
-					return {
-						color: '#008000'
-					};
-				} else if (value > 0.005){
-					return {
-						color: '#7fbf7f'
-					};
-				} else {
-					return {
-						color: '#e5f2e5'
-					};
-				}
-			}
+			/////////////////////////////////
+			// DYNAMIC DATA, ANIMATED MAP: //
+			/////////////////////////////////
 			
 			// map div 2, for dynamic data 
 			var map_dynamic = L.map('map_dynamic').setView([-6.641224624683114,-55.6095886343115], 4); 
@@ -728,42 +702,112 @@
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(map_dynamic);
 			
+			// SLIDER BUTTON PANEL
 			var buttonpanelControl = L.control({position: 'bottomleft'});
 			buttonpanelControl.onAdd = function () {
 				  var div = L.DomUtil.create('div');
-				  div.innerHTML = '<div class="leaflet-bar custom-control" style="display: flex; flex-direction: column; align-items: center;">Header if needed<div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; width: 100%;">						<span id="evszam"> </span> <div><input id="loopcheckbox" name="loopcheckbox" type="checkbox" checked>						<label for="loopcheckbox">Loop</label></div><input type="button" value="Start" onclick="startStop(this)" />						</div><input id="evcsuszka" type="range" min="2001" max="2021" oninput="datumBeall(this.value)" style="width: 200px"/></div>';	
+				  div.innerHTML = '<div class="leaflet-bar custom-control" style="display: flex; flex-direction: column; align-items: center;"><div style="width: 100%">Precipitation 2001-2021 (monthly mean)</div><div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; width: 100%;">						<span id="month" style="width: 20%;"> </span> <div><input id="loopcheckbox" name="loopcheckbox" type="checkbox" checked>						<label for="loopcheckbox">Loop</label></div><input type="button" value="Start" onclick="startStop(this)" />						</div><input id="monthslider" type="range" min="1" max="12" oninput="datumBeall(this.value)" style="width: 200px"/></div>';	
 				  
 					L.DomEvent.disableClickPropagation(div);
 				  return div;
 			};
-			buttonpanelControl.addTo(map_dynamic);
-			
+			buttonpanelControl.addTo(map_dynamic);			
 			buttonpanelControl.getContainer().addEventListener('mouseover', function () {
 				map_dynamic.dragging.disable();
 			});
 			buttonpanelControl.getContainer().addEventListener('mouseout', function () {
 				map_dynamic.dragging.enable();
 			});
+					
+			// DYNAMIC MAP: LEGEND for GRADIENTS
+			function setLegend_gradient_dynamic(values, unit, colors, targetmap){
+				legend = L.control({position: 'bottomright'});
+				legend.onAdd = function(map_dynamic) {
+					var div = L.DomUtil.create("div");
+					var content = '<div id="legenddiv" class="leaflet-bar custom-control legend">';
+						content += '<div style="display: flex; flex-direction: column; margin-top: 4px; width: 130px;">';
+							content += '<div style="background: linear-gradient(to right, '+colors[0]+', '+colors[1]+'); width: 100%; height: 14px;"></div>';
+							content += '<div style="display: flex; flex-direction: row; justify-content: space-between;"><span>'+values[0]*1000+'</span><span>'+values[1]*1000+'</span></div><div style="display: flex; flex-direction: row; justify-content: center;">'+unit+'</div>';
+						content += '</div>';
+					content += '</div>';
+					 
+					div.innerHTML = content;
+					  
+					return div;
+					
+				};
+				legend.addTo(map_dynamic);
+			};
 			
-			var datum=2001;
-			document.getElementById('evszam').innerHTML=datum;
-			document.getElementById('evcsuszka').value=datum;
+			var month = 1;
+			document.getElementById('month').innerHTML=swapMonthNumberwithName(month);
+			document.getElementById('monthslider').value=month;
+							
+			// GeoTIFF in dynamic map
+			var layerPrecip;
+			var tifftooltip_precip;
+			var layerControl_dynamic;
+			var precip_range;
 			
-			var x=new XMLHttpRequest();
-			x.open('get', 'data/deforestation_area_1000000.geojson', false);
-			x.send();
-			var d=JSON.parse(x.responseText);
-			var deforest_dynamic=L.geoJSON(d,{style: stilus, onEachFeature: function (feature, layer) { mousehighlight(feature, layer)
-				layer.bindTooltip(feature.properties["deforestation _"+datum].toString());}
-				}).addTo(map_dynamic);
+			function loadTiff(filename) {
+				d3.request(filename).responseType('arraybuffer').get( function (error, tiffData) {
 				
-			function datumBeall(ev){
-				document.getElementById('evszam').innerHTML=ev;
-				datum=ev;
-				deforest_dynamic.remove();
-				deforest_dynamic=L.geoJSON(d, {style: stilus, onEachFeature: function (feature, layer) { mousehighlight(feature, layer)
-				layer.bindTooltip(feature.properties["deforestation _"+datum].toString());}
-				}).addTo(map_dynamic);
+					// if there is a geotiff layer loaded, remove it first
+					if (layerPrecip != null) {
+						layerPrecip.remove();
+					}
+				
+					let precip = L.ScalarField.fromGeoTIFF(tiffData.response, bandIndex = 0);
+					layerPrecip = L.canvasLayer.scalarField(precip, {
+							color: chroma.scale(['black', 'orange']).domain([0, 0.085]),		// domain: the range. can be precip.range as well, range will be automatic from data then
+							opacity: 1,
+							attribution: '© 2022 <a href="www.ecmwf.int">European Centre for Medium-Range Weather Forecasts (ECMWF)</a>'
+							});
+					precip_range = precip.range;
+					//console.log(precip_range)					
+					
+					// what happens upon mouse hover over the raster
+					layerPrecip.on("mousemove", function(e) {
+						// mouse moved
+						if (e.value !== null) {							// value under mouse is not null
+							if (tifftooltip_precip !== null) {			// if tifftooltip is already open, close the previous tooltip so it does not get stuck on map
+								map_dynamic.closeTooltip(tifftooltip_precip);
+							}
+							// create tooltip:
+							tifftooltip_precip = L.tooltip()
+								.setLatLng(e.latlng)
+								.setContent(parseFloat(`${e.value*1000}`).toFixed(3) + ' mm/day'); // CONVERSION FROM M/DAY TO MM/DAY
+							map_dynamic.openTooltip(tifftooltip_precip);			// open tooltip
+						} else {										// value is null
+							if (tifftooltip_precip !== null) {			// if any tooltip is open, close it since we went elsewhere from the area with the cursor, so previous one does not get stuck
+								map_dynamic.closeTooltip(tifftooltip_precip);
+							}
+						}
+					});
+					
+					// add the geotiff layer to map
+					layerPrecip.addTo(map_dynamic);										
+					
+					// if there is no layer switcher yet, create one
+					if (layerControl_dynamic == null) {
+						setLegend_gradient_dynamic([0, 0.085], 'mm/day', chroma.scale(['black', 'orange']).colors(2), map_dynamic);
+						// first run, add to map so we see by default, create layer switcher
+						overlayMaps_dynamic = { "Precipitation (mean)": layerPrecip };
+						layerControl_dynamic = L.control.layers(overlayMaps_dynamic, null, {collapsed:false}).addTo(map_dynamic); 
+					}
+				  
+				});	
+					
+			}
+			
+			// load by default
+			loadTiff('data/meanmonths/precip_01.tif');
+				
+			function datumBeall(ho){
+				document.getElementById('month').innerHTML = swapMonthNumberwithName(parseInt(ho));
+				var nextfilename = 'data/meanmonths/precip_'+String(ho).padStart(2, '0')+'.tif';
+				console.log(nextfilename)
+				loadTiff(nextfilename);				
 			}
 			
 			var idozito;
@@ -771,38 +815,76 @@
 			function startStop(b){
 				if (b.value=="Start" || b.value=="Replay") {
 					// ha veget ert az animacio, megallt mert nem loopos, es az ujra gombra kattintunk, visszaallitjuk a 2000-re
-					if (datum => 2021) {
-						datum = 2000;
+					if (month => 12) {
+						month = 0;
 					}
 					// elinditjuk a lejatszast
 					idozito=setInterval(function(){
-						document.getElementById('evcsuszka').disabled = true;
-						datum+=1;
-						if (datum > 2021) {
+						document.getElementById('monthslider').disabled = true;
+						month+=1;
+						if (month > 12) {
 							// a vegere ertunk, loop ellenorzes
 							if (document.getElementById('loopcheckbox').checked) {
 								// loop igen, menjunk elolrol
-								datum = 2001;
+								month = 1;
 							} else {
 								// loop nem, alljunk meg a vegen
-								datum-=1;
+								month-=1;
 								clearInterval(idozito);
-								document.getElementById('evcsuszka').disabled = false;
+								document.getElementById('monthslider').disabled = false;
 								// gomb: "Replay"-t irjon, mert megalltunk es a vegen vagyunk
 								b.value="Replay";
 							}
 						}
-						datumBeall(datum);
-						document.getElementById('evcsuszka').value=datum;
+						datumBeall(month);
+						document.getElementById('monthslider').value=month;
 					},500); // 500 ms per step
 					b.value="Stop";
 				} else {
 					// megallitjuk
-					document.getElementById('evcsuszka').disabled = false;
+					document.getElementById('monthslider').disabled = false;
 					clearInterval(idozito);
 					b.value="Start";
 				}
 			}
+			
+			function swapMonthNumberwithName(num) {
+				switch(num) {
+				  case 1:
+					return 'January';
+				  case 2:
+					return 'February';
+				  case 3:
+					return 'March';
+				  case 4:
+					return 'April';
+				  case 5:
+					return 'May';
+				  case 6:
+					return 'June';
+				  case 7:
+					return 'July';
+				  case 8:
+					return 'August';
+				  case 9:
+					return 'September';
+				  case 10:
+					return 'October';
+				  case 11:
+					return 'November';
+				  case 12:
+					return 'December';
+				  default:
+					return num;
+				} 
+			}
+			
+			map_dynamic.on('baselayerchange', function (e) {
+				map_dynamic.removeControl(legend);
+				if (e.name === 'Precipitation (mean)') {
+					setLegend_gradient([0, 0.085], 'mm/day', chroma.scale(['black', 'orange']).colors(2), map_dynamic);
+				} 
+			});
 		</script>
 	</body>
 </html>

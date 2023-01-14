@@ -30,11 +30,12 @@
 				font-family: 'Open Sans', 'OpenSans-Local';
 				font-style: normal;
 				color: #373f27;
-				background-color: #e9e7da;
-				
-			}
+				background-color: #FFF8EA;
+			} 
+			
 			p {
 				text-align: justify;
+				color: #594545;
 			}
 			
 			#map, #map_dynamic, #map_2 {
@@ -238,14 +239,15 @@
 					<canvas id="dualaxisChart2" width="100%" height="400px"></canvas>
 				</div>
 				<div>
+					<canvas id="dualaxisChart3" width="100%" height="400px"></canvas>
+				</div>
+				<div>
 					<canvas id="scatterplot" width="100%" height="400px"></canvas>
 				</div>
 				<div>
 					<canvas id="scatterplot2" width="100%" height="400px"></canvas>
 				</div>
 				
-			</div><iframe title="Correlation between deforestation and precipitation " aria-label="Scatter Plot" id="datawrapper-chart-YCxE2" src="https://datawrapper.dwcdn.net/YCxE2/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="400" data-external="1"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
-
 		</div>
 		
 		
@@ -298,23 +300,23 @@
 				
 				if (p.deforestation_average_deforestation_average > 8.0900) {
 					return {
-						color: '#000000'
+						color: '#a50f15'
 					}
 				} else if (p.deforestation_average_deforestation_average > 5.9100){
 					return {
-						color: '#400000'
+						color: '#de2d26'
 					};
 				} else if (p.deforestation_average_deforestation_average > 2.4000){
 					return {
-						color: '#800000'
+						color: '#fb6a4a'
 					};
 				} else if (p.deforestation_average_deforestation_average > 0.6701){
 					return {
-						color: '#bf0000'
+						color: '#fc9272'
 					};
 				} else {
 					return {
-						color: '#ff0000'
+						color: '#fcbba1'
 					};
 				}
 			} 
@@ -495,8 +497,9 @@
 					// when hover over the feature, highlight it
 					layer.on('mouseover', function () {
 						this.setStyle({
-							'weight': '5',
-							'fillOpacity': '0.6'
+							'weight': '6',
+							'fillOpacity': '1',
+							'border-width': '0.5',
 						});
 					});
 					// when we go off the feature, return to default style
@@ -504,7 +507,8 @@
 						this.setStyle({
 							'fillColor': feature.properties.fillColor,
 							'weight': '4',
-							'fillOpacity': '0.2'
+							'fillOpacity': '0.6'
+							
 						});
 					});
 				}
@@ -552,7 +556,7 @@
 			
 				let nirv = L.ScalarField.fromGeoTIFF(tiffData.response, bandIndex = 0);
 				let layerNirv = L.canvasLayer.scalarField(nirv, {
-						color: chroma.scale(['white', 'green']).domain(nirv.range),		// first the colors from-to (can be 3+ colors too, but fix legend too), then in domain part: get the min and max values of dataset
+						color: chroma.scale(['#1C6FF8', '#27BBE0', '#31DB92', '#1BF118', '#9BFA24', '#FEF720']).domain(nirv.range),		// first the colors from-to (can be 3+ colors too, but fix legend too), then in domain part: get the min and max values of dataset
 						opacity: 1
 				});
 				
@@ -1029,8 +1033,8 @@
 			 var data = {
 				"datasets": [
 				  {
-					"backgroundColor": "rgb(156, 39, 176)",
-					"borderColor": "rgb(156, 39, 176)",
+					"backgroundColor": "rgb(165,15,21)",
+					"borderColor": "rgb(165,15,21)",
 					"fill": false,
 					"data": [19.624, 17.85, 29.43, 53.314, 138.498, 128.354, 244.602, 226.432, 331.004, 155.59, 37.276, 33.356],
 					"label": "Deforestation (Km\u00B2)",
@@ -1101,8 +1105,8 @@
 			var data2 = {
 				"datasets": [
 				  {
-					"backgroundColor": "rgb(156, 39, 176)",
-					"borderColor": "rgb(156, 39, 176)",
+					"backgroundColor": "rgb(165,15,21)",
+					"borderColor": "rgb(165,15,21)",
 					"fill": false,
 					"data": [27.718, 4.07, 1.8, 42.48, 4.924, 13.552, 2.344, 29.688, 87.424, 37.168, 25.976, 4.184],
 					"label": "Deforestation (Km\u00B2)",
@@ -1123,6 +1127,93 @@
 			  
 			
 			var myChart2 = new Chart(document.getElementById("dualaxisChart2").getContext('2d'), {options: options, data: data2, type: type});
+			
+			
+			// DUAL AXIS CHART 3
+			
+			var data3 = {
+				"datasets": [
+				  {
+					"backgroundColor": "rgb(165,15,21)",
+					"borderColor": "rgb(1165,15,21)",
+					"fill": false,
+					"data": [482, 435, 865, 773, 932, 684, 1030, 1376, 1243, 1316, 1257, 1273, 1673],
+					"label": "Deforestation (Km\u00B2)",
+					"yAxisID":"y1"
+				  },
+				  {
+					"backgroundColor": "rgb(39, 176, 200)",
+					"borderColor": "rgb(39, 176, 200)",
+					"fill": false,
+					"data": [8.12, 6.92, 7.91, 7.31, 7.86, 8.11, 7.26, 7.45, 7.70, 7.09, 8.13, 7.12, 7.67],
+					"label": "Precipitation (mm/day)",
+					"type": 'line',
+					"yAxisID":"y2"
+				  },
+				  {
+					"backgroundColor": "rgb(255, 99, 132)",
+					"borderColor": "rgb(255, 99, 132)",
+					"fill": false,
+					"data": [19725010, 23907887, 27574714, 30112720, 31121413, 34030982, 36563333, 39460359, 43516147, 44913978, 47091336],
+					"label": "GDP",
+					"type": 'line',
+					"yAxisID":"y3"
+				  }
+				],
+				"labels": [
+				  "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021"]
+			  };
+			  
+			  var options2 = {
+				responsive: true,
+				interaction: {
+					mode: 'index',
+					intersect: false
+				},
+				elements: {
+				  "rectangle": {
+					"borderWidth": 2
+				  }
+				},
+				layout: {
+				  "padding": 0
+				},
+				legend: {
+				  "display": true,
+				  "labels": {
+					"boxWidth": 16
+				  }
+				},
+				maintainAspectRatio: false,
+				responsive: true,
+				scales: {
+					"y1": {
+						position: 'left'
+					},
+					"y2": {
+						position: 'right',
+						grid: {
+						  drawOnChartArea: false, // only want the grid lines for one axis to show up
+						}
+					},
+					"y3": {
+						position: 'right',
+						grid: {
+						  drawOnChartArea: false, // only want the grid lines for one axis to show up
+						}
+					}
+				},
+				tooltips: {
+				  "intersect": false,
+				  "mode": "index",
+				  "position": "nearest",
+				  "callbacks": {}
+				}
+			};
+				
+			var type = "bar";
+			
+			var myChart3 = new Chart(document.getElementById("dualaxisChart3").getContext('2d'), {options: options2, data: data3, type: type});
 
 		
 			// SCATTER Plot 1

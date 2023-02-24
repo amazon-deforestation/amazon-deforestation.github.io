@@ -3,6 +3,9 @@
 <html>
 	<head>
 		<title>Deforestation</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<meta charset="utf-8">
+		
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
@@ -24,6 +27,7 @@
 		<!-- for the trendline -->
 		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline"></script>
 		<style>
+			/* Globals */
 			html, body {
 				height: 100%;
 				margin: 0;
@@ -31,40 +35,43 @@
 				font-style: normal;
 				color: #373f27;
 				background-color: #FFF8EA;
-			} 
-			
+			} 			
 			p {
 				text-align: justify;
 				color: #594545;
 			}
 			
+			/* Leaflet map containers */
 			#map, #map_dynamic, #map_2 {
 				width: 65%;
 				height: 400px;
 				margin:  auto;
 			}
 			
-			
+			/* Content section (one revealed at a time) */
 			.section {
 				padding-left: 250px;
 				padding-right: 250px;
 				padding-top: 5px;
 				padding-bottom: 5px;
 			}
+			/* Site-wide image section optional options */
 			.imagesection {
 			}
+			/* Site-wide image: text overlay */
+			.cim_a_kepen {
+				color: white; 
+				font-weight: bold; 
+				font-size: 15pt;
+				text-shadow: 2px 2px 5px #000000c7;
+			}
+			
 			.datawrapper_element {
 			  background-color: white;
 			  padding-top: 10px;
 			  padding-bottom: 10px;
 			  padding-left: 30px;
 			  padding-right: 30px;
-			}
-			.cim_a_kepen {
-				color: white; 
-				font-weight: bold; 
-				font-size: 15pt;
-				text-shadow: 2px 2px 5px #000000c7;
 			}
 			/* Scroll reveal animation: https://alvarotrigo.com/blog/css-animations-scroll/ */
 			.reveal {
@@ -77,17 +84,34 @@
 			  transform: translateY(0);
 			  opacity: 1;
 			}
+			
+			/* Top bar container */
 			#topbar {
 				background-color: white;
 				width: 100%;
 				top: 0;
-				height: 150px;
-				padding-top: 24px;
-				padding-bottom: 24px;
+				min-height: 75px;
+				padding-top: 6px;
+				padding-bottom: 6px;
 				padding-left: 38px;
 				padding-right: 38px;
 				display: flex;
 				box-sizing: border-box;
+			}
+			/* Links in topbar */
+			#topbar a {
+				font-size: 16px;
+				text-align: center;
+				padding: 14px 10px;
+				text-decoration: none;
+				border-radius: 3px;
+				transition: background-color 0.2s ease-out;
+				color: #000000;
+			}
+			/* Hover over links in topbar */
+			#topbar a:hover {
+				background-color: #FFF8EA;
+				font-weight: bold;
 			}
 			
 			/* Highcharts */
@@ -100,33 +124,27 @@
 				width: 100%;
 				max-width: 500px;
 			}
-
 			.highcharts-data-table caption {
 				padding: 1em 0;
 				font-size: 1.2em;
 				color: #555;
 			}
-
 			.highcharts-data-table th {
 				font-weight: 600;
 				padding: 0.5em;
 			}
-
 			.highcharts-data-table td,
 			.highcharts-data-table th,
 			.highcharts-data-table caption {
 				padding: 0.5em;
 			}
-
 			.highcharts-data-table thead tr,
 			.highcharts-data-table tr:nth-child(even) {
 				background: #f8f8f8;
 			}
-
 			.highcharts-data-table tr:hover {
 				background: #f1f7ff;
 			}
-
 			#csv {
 				display: none;
 			}
@@ -158,9 +176,12 @@
 				background-color: #FFFFFFDD; 
 				padding: 6px 8px;
 			}
+			
+			/* Dynamic map: control panel */
 			#buttonpanel {
 				position: absolute;
-				bottom: 5px; left: 5px;
+				bottom: 5px;
+				left: 5px;
 				background: rgba(255,255,255,0.4);
 				padding: 10px;
 				border: solid 2px black;
@@ -169,88 +190,168 @@
 				text-align: center;
 				backdrop-filter: blur(10px);
 			}
+			
+			/* Footer container */
+			#footer {
+				display: flex;
+				bottom: 0px;
+				width: 100%;
+				justify-content: center;
+				column-gap: 50px;
+				flex-direction: row;
+				height: 90px;
+				align-items: center;
+				background: rgba(255,255,255,0.4);
+				margin-top: 50px;
+			}
+			
+			/* Site-wide image caption (attribution, source, license) */
+			.img_wide_caption {
+				position: absolute;
+				height: 20px; 
+				right: 0px;
+				margin-top: -29px; 
+				padding: 4px 5px 0px 6px;
+				color: white;
+				font-size: 8pt;
+				background: rgba(255,255,255,0.41);
+				width: fit-content;
+				border-radius: 3px 0px 0px 0px;
+				backdrop-filter: blur(2px);
+			}
+			
+			/* Chartjs container width limiter */
+			.chartjsdiv {
+				max-width: 650px;
+				margin: auto;
+			}
+			
+			/* Some mobile optimization */
+			@media (max-width: 1125px) {
+				.section {
+					padding-left: 20px; 
+					padding-right: 20px;			
+				}
+				#map, #map_dynamic, #map_2 {
+					width: 90%;
+					height: 400px;
+					margin:  auto;
+				}
+				p {
+					font-size: 12px;
+				}
+				h2 {
+					font-size: 1.2em;
+				}
+				.cim_a_kepen {
+					font-size: 12pt;
+				}
+			}
+			@media (max-width: 790px) {
+				h1 {
+					font-size: 12pt !important;
+				}
+				#topbar a {
+					font-size: 12px !important;
+				}
+				.img_wide_caption {
+					font-size: 7pt;
+				}
+			}
+			
 		</style>
 	</head>
 	<body>
 		
 		<div id="topbar">
 			<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%">
-				<img src="stop.jpg" style="height: 130px"></img>
-				<h1 style="font-size:20px;">Rapidly increasing deforestation of the Amazon rainforest</h1>
-				<div style="display: flex; flex-direction: row; column-gap: 20px;">
-					<a href="#section1">Deforestation by states</a>
-					<a href="https://www.w3schools.com">Visit W3Schools</a>
-					<a href="https://www.w3schools.com">Visit W3Schools</a>
+				<img src="stop.jpg" style="height: 75px"></img>
+				<h1 style="font-size: 22px;">Rapidly increasing deforestation of the Amazon rainforest</h1>
+				<div style="display: flex; flex-direction: row; column-gap: 10px; align-items: center;" id="topbar_menubuttons">
+					<a href="#section1">Deforestation by states (jump to sc)</a>
+					<a href="">somethingelse</a>
+					<a href="">linktowhatever</a>
 				</div>
 			</div>
 		</div>
 			
 		<div id="maincontent" style="display: flex; flex-direction: column; row-gap: 20px;">			
 			
-			<div id="imagesection1" class="imagesection reveal">
+			<div id="imagesection1" class="imagesection">
 				<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" class="cim_a_kepen">The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</div>
 				<img src="forest.jpg" style="max-width: 100%"></img>
+				<div class="img_wide_caption">Aerial view of the Amazon Rainforest, near Manaus, the capital of the Brazilian state of Amazonas. Author: Neil Palmer (CIAT). Licensed under <a href="https://creativecommons.org/licenses/by-sa/2.0/deed.en">CC BY-SA 2.0</a>.</div>
 			</div>
 			
 			<div id="section0" class="section reveal">
 				<h2>States Map</h2>
-				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long. </p>
+				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</p>
 				<div id="map"></div>
-				blablabla
-				<div id="map_dynamic"></div>
 			</div>
-			
 			
 			<div id="section1" class="section reveal">
-				<figure class="highcharts-figure">
+				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</p>
+				<div id="map_dynamic"></div>
+				<p>blablablablablabla blablablablablabla blablablablablabla blablablablablabl bla blabla bla blablablablablabla blablablablablabla blablablablablabla blablablablablabl bla blabla bla blablablablablabla blablablablablabla blablablablablabla blablablablablabl bla blabla bla blablablablablabla blablablablablabla blablablablablabla blablablablablabl bla blabla bla </p>				
+				<div style="display: flex; justify-content: center;"> 
 					<div id="container"></div>
-						<p class="highcharts-description">
-							Chart showing a dependency wheel, where each point consists of multiple
-							weighted links to other points. This chart type is often used to
-							visualize data flow, and can be a striking way to illustrate
-							elationships in data.
-						</p>
-				</figure>
-				<h2>Deforestation by states (Legal Amazon)</h2>
-				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.  </p>
-				<div id="diagram" class="datawrapper_element">
-					<iframe title="Deforestation increments by states - Legal Amazon 
-					" aria-label="Interactive line chart" id="datawrapper-chart-Hj5aG" src="https://datawrapper.dwcdn.net/Hj5aG/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="518"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
 				</div>
-			</div>
-			
-			<div id="map_2"></div>
-			
-			<div id="imagesection2" class="imagesection reveal">
-				<img src="fire.jpg" style="max-width: 100%"></img>
+				<p>
+					Chart showing a dependency wheel, where each point consists of multiple
+					weighted links to other points. This chart type is often used to
+					visualize data flow, and can be a striking way to illustrate
+					relationships in data.
+				</p>
 			</div>
 			
 			<div id="section2" class="section reveal">
+				<h2>Deforestation by states (Legal Amazon)</h2>
+				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.  </p>
+				
+			</div>
+			
+			
+			<div id="imagesection2" class="imagesection reveal">
+				<img src="fire.jpg" style="max-width: 100%"></img>
+				<div class="img_wide_caption" style="background-color: red;">CAPTION / ATTRIBUTION NEEDED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</div>
+			</div>
+			
+			<div id="section3" class="section reveal">
 				<h2>What is NIRv?</h2>
 				<iframe frameborder="0" class="juxtapose" width="100%" height="772" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=cf48f9c4-8cfd-11ed-b5bd-6595d9b17862"></iframe>
 				
 			</div>
 
 			<div id="section4" class="section reveal">
-				<div>
+				<div class="chartjsdiv">
 					<canvas id="dualaxisChart" width="100%" height="400px"></canvas>
 				</div>
-				<div>
+				<div class="chartjsdiv">
 					<canvas id="dualaxisChart2" width="100%" height="400px"></canvas>
 				</div>
-				<div>
+				<div class="chartjsdiv">
 					<canvas id="dualaxisChart3" width="100%" height="400px"></canvas>
 				</div>
-				<div>
+				<div class="chartjsdiv">
 					<canvas id="dualaxisChart4" width="100%" height="400px"></canvas>
 				</div>
-				<div>
+				<div class="chartjsdiv">
 					<canvas id="scatterplot" width="100%" height="400px"></canvas>
 				</div>
-				<div>
-					<canvas id="scatterplot2" width="100%" height="400px"></canvas>
-				</div>
 				
+		</div>
+		
+		<div id="section5" class="section reveal">
+
+			<div id="map_2"></div>
+			
+		</div>
+				
+		<div id="footer">
+			<div>footer text (copyright, year, data refs, anything) on the left</div>
+			<div>Icon1</div>
+			<div>Icon2</div>
+			<div>Icon3</div>
 		</div>
 		
 		
@@ -281,22 +382,20 @@
 			}
 			
 			function tooltip_deforestation(layer) {
-				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> deforestation: " + layer.feature.properties.deforestation_average_deforestation_average.toFixed(2) + " %";
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Deforestation: " + layer.feature.properties.deforestation_average_deforestation_average.toFixed(2) + " %</div>";
 			}
 			function tooltip_nirv(layer) {
-				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> NIRV: " + layer.feature.properties.nirv_average_Average.toFixed(3);
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>NIRv: " + layer.feature.properties.nirv_average_Average.toFixed(3) + "</div>";
 			}
 			function tooltip_precip(layer) {
-				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> precipitation: " + layer.feature.properties.precip_by_states_2001_2019_VAL.toFixed(3);
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Precipitation: " + layer.feature.properties.precip_by_states_2001_2019_VAL.toFixed(3) + "</div>";
 			}
 			function tooltip_population(layer) {
-				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> population: " + layer.feature.properties.population_average_population_average.toLocaleString();
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Population density: " + layer.feature.properties.population_average_population_average.toLocaleString() + " / km<sup>2</sup></div>";
 			}
 			function tooltip_gdp(layer) {
-				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> GDP (R$ 1 billion): " + layer.feature.properties.gdp_average_gdp_average;
-			}
-			
-		
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>GDP (R$ 1 billion): " + layer.feature.properties.gdp_average_gdp_average + "</div>";
+			}		
 			
 			function stilus_deforestation(feature){
 				var p = feature.properties;
@@ -445,19 +544,19 @@
 					};
 				} else if (p.slope_slope == "y =-0.018x+4.110"){
 					return {
-						color: '#abd9e9'
+						color: '#97bedb'
 					};
 				} else if (p.slope_slope == "y =-0.027x+10.683"){
 					return {
-						color: '#ffffbf'
+						color: '#ffffff'
 					};
 				} else if (p.slope_slope == "y =0.032x+3.073"){
 				 	return {
-						color: '#ffffbf'
+						color: '#ffffff'
 					};
 				} else if (p.slope_slope == "y =-0.038x+10.078"){
 					return {
-						color: '#fdae61'
+						color: '#ec9490'
 					};
 				} else if (p.slope_slope == "y =-0.063x+6.600"){
 					return {
@@ -519,7 +618,8 @@
 				
 			// map div object, main Leaflet object:
 			var map = L.map('map',{maxBounds: L.latLngBounds(L.latLng(-29.935789, -94.974456), L.latLng(22.153948, -27.264859)),
-								maxBoundsViscosity: 1.0
+									maxBoundsViscosity: 1.0,
+									minZoom: 3
 									}).setView([-6.641224624683114,-55.6095886343115], 4); 
 			map.addControl(new L.Control.Fullscreen());
 			map.scrollWheelZoom.disable();
@@ -546,10 +646,9 @@
 			
 			// list of overlays
 			var overlayMaps = {
-				
-				"Deforestation % ": mainmap_deforestation,
+				"Deforestation": mainmap_deforestation,
 				"Population density": mainmap_population,
-				"GDP ": mainmap_gdp
+				"GDP": mainmap_gdp
 			};
 			
 			// GeoTIFF for nirv
@@ -619,37 +718,33 @@
 				});
 				
 				// lets add the tiff layer to the overlayMaps object (which lists our switchable layers)
-				Object.assign(overlayMaps, { "Precipitation": layerprecip });
-				
-			
+				Object.assign(overlayMaps, { "Precipitation": layerprecip });			
 			  
 			});
 			
 			
 			// HIGHCHARTS - DEPENDENCY WHEEL:
 			Highcharts.chart('container', {
-
+				chart: {
+					width: 700
+				},
 				title: {
 					text: 'Correlation among social and natural factors'
-				},
-				
+				},				
 				subtitle: {
 					text: 'Subtitle is something'
 				},
-
 				// tooltip lower row format
 				tooltip: {
 					//pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 					//pointFormat: '{index}. From {point.from} to {point.to}: {point.weight} {point.mas}'
 					pointFormat: 'Correlation between {point.from} and {point.to}: {point.source}'
-				},
-				
+				},				
 				accessibility: {
 					point: {
 						valueDescriptionFormat: 'Correlation between {point.from} and {point.to}: {point.source}.'
 					}
 				},
-
 				series: [{
 					type: 'dependencywheel',
 					name: 'Dependency wheel series', 				// appears on top of tooltip, indicating the series name
@@ -687,20 +782,22 @@
 							}
 						}
 					}
-				}]
-			
+				}]			
 			});
 			
 
-			setLegend([(8.09).toFixed(2), (3.63).toFixed(2), (1.23).toFixed(2), (0.5).toFixed(2)], ['#000000', '#400000', '#800000', '#bf0000', '#ff0000']);	
+			setLegend('Deforestation (%)', [(8.09).toFixed(2), (3.63).toFixed(2), (1.23).toFixed(2), (0.5).toFixed(2)], ['#000000', '#400000', '#800000', '#bf0000', '#ff0000']);	
 			
 			// STATIC MAP: LEGEND for values
-			function setLegend(values, colors){
+			function setLegend(title, values, colors){
 				legend_mainmap = L.control({position: 'bottomright'});
 				legend_mainmap.onAdd = function(map) {
 					var div = L.DomUtil.create("div");
 					var content = '<div id="legenddiv" class="leaflet-bar custom-control legend">';
 						content += '<div class="legendcolumnlist">';
+							content += '<div class="legenditem" style="justify-content: center;">';
+								content += '<span style="">'+title+'</span>';
+							content += '</div>';
 							content += '<div class="legenditem">';
 								content += '<div style="background-color: '+colors[0]+'; width: 27px; height: 16px; margin-right: 5px;"></div>';
 								content += '<span>'+values[0]+' < </span>';
@@ -763,12 +860,12 @@
 			
 			map.on('baselayerchange', function (e) {
 				map.removeControl(legend_mainmap);
-				if (e.name === 'Deforestation % ') {
-					setLegend([8.0892.toFixed(2), 3.6333.toFixed(2), 1.2308.toFixed(2), 0.4993.toFixed(2)], ['#000000', '#400000', '#800000', '#bf0000', '#ff0000']);
+				if (e.name === 'Deforestation') {
+					setLegend('Deforestation (%)', [8.0892.toFixed(2), 3.6333.toFixed(2), 1.2308.toFixed(2), 0.4993.toFixed(2)], ['#000000', '#400000', '#800000', '#bf0000', '#ff0000']);
 				}  else if (e.name === 'Population density') {
-					setLegend([parseFloat(6.180).toLocaleString(), parseFloat(4.790).toLocaleString(), parseFloat(3.210).toLocaleString(), parseFloat(1.910).toLocaleString()], ['#4c4c00', '#7f7f00', '#b2b200', '#e5e500', '#ffff00']);
-				} else if (e.name === 'GDP ') {
-					setLegend([98.75, 72.75, 26.25, 9.75], ['#111111', '#333333', '#555555', '#777777', '#999999']);
+					setLegend('Population density (per km<sup>2</sup>)', [parseFloat(6.180).toLocaleString(), parseFloat(4.790).toLocaleString(), parseFloat(3.210).toLocaleString(), parseFloat(1.910).toLocaleString()], ['#4c4c00', '#7f7f00', '#b2b200', '#e5e500', '#ffff00']);
+				} else if (e.name === 'GDP') {
+					setLegend('GDP (R$ 1 billion)', [98.75, 72.75, 26.25, 9.75], ['#111111', '#333333', '#555555', '#777777', '#999999']);
 				} else if (e.name === 'NIRv') {
 					setLegend_gradient([-0.082, 0.332], '', chroma.scale(['white', 'green']).colors(2), map); // first param is labels: [mix, max], second param is the colors from-to (min, then max)
 				} else if (e.name === 'Precipitation') {
@@ -782,7 +879,8 @@
 			
 			// map div 2, for dynamic data 
 			var map_dynamic = L.map('map_dynamic', {maxBounds: L.latLngBounds(L.latLng(-30, -90), L.latLng(15, -30)),
-								maxBoundsViscosity: 1.0
+									maxBoundsViscosity: 1.0,
+									minZoom: 3
 									}).setView([-5,-60], 4);
 			map_dynamic.addControl(new L.Control.Fullscreen());			
 			map_dynamic.scrollWheelZoom.disable();
@@ -987,17 +1085,18 @@
 			 
 			 
 			 function tooltip_slope(layer) {
-				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> Slope: " + layer.feature.properties.slope_slope;
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Slope: " + layer.feature.properties.slope_slope + "</div>";
 			}
 			function tooltip_r2(layer) {
-				return "<b><div style='font-size:20px'>" + layer.feature.properties.nome + "</div></b><br> R<sup>2</sup>: " + layer.feature.properties.correlation_r2_values_leaflet_r2;
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>R<sup>2</sup>: " + layer.feature.properties.correlation_r2_values_leaflet_r2 + "</div>";
 			}
 			 
 			 // map div object,  Leaflet2 object:
 			 
 			var map_2 = L.map('map_2',{maxBounds: L.latLngBounds(L.latLng(-29.935789, -94.974456), L.latLng(22.153948, -27.264859)),
-								maxBoundsViscosity: 1.0
-									}).setView([-6.641224624683114,-55.6095886343115], 4); 
+									maxBoundsViscosity: 1.0,
+									minZoom: 3
+								}).setView([-6.641224624683114,-55.6095886343115], 4); 
 			map_2.addControl(new L.Control.Fullscreen());
 			map_2.scrollWheelZoom.disable();
 			
@@ -1056,12 +1155,12 @@
 				legend_r2correl.addTo(map_2);
 			};
 			
-			setLegend_gradient_r2correl([0.003, 0.071], '', chroma.scale(['#2c7bb6', '#abd9e9', '#ffffbf', '#fdae61', '#d7191c']).colors(5));
+			setLegend_gradient_r2correl([-0.1, 0.1], '', chroma.scale(['#2c7bb6', '#97bedb', '#ffffff', '#ec9490', '#d7191c']).colors(5));
 			
 			map_2.on('baselayerchange', function (e) {
 				map_2.removeControl(legend_r2correl);
 				if (e.name === 'Slope ') {
-					setLegend_gradient_r2correl([0.003, 0.071], '', chroma.scale(['#2c7bb6', '#abd9e9', '#ffffbf', '#fdae61', '#d7191c']).colors(5));
+					setLegend_gradient_r2correl([-0.1, 0.1], '', chroma.scale(['#2c7bb6', '#97bedb', '#ffffff', '#ec9490', '#d7191c']).colors(5));
 				} else if (e.name === 'R<sup>2</sup>') {
 					setLegend_gradient_r2correl([0.02, 0.905], '', chroma.scale(['#999999', '#777777', '#555555', '#333333', '#111111']).colors(5));
 				} 
@@ -1077,15 +1176,15 @@
 					"borderColor": "rgb(165,15,21)",
 					"fill": false,
 					"data": [19.624, 17.85, 29.43, 53.314, 138.498, 128.354, 244.602, 226.432, 331.004, 155.59, 37.276, 33.356],
-					"label": "Deforestation (Km\u00B2)",
+					"label": "Deforestation",
 					"yAxisID":"y1"
 				  },
 				  {
-					"backgroundColor": "rgb(39, 176, 200)",
-					"borderColor": "rgb(39, 176, 200)",
+					"backgroundColor": "rgb(8,81,156)",
+					"borderColor": "rgb(8,81,156)",
 					"fill": false,
 					"data": [9.862585687, 9.80565275, 10.82662277, 11.46246432, 9.35921619, 4.988833866, 2.98230954, 2.798426994, 3.997075154, 5.718009035, 8.270209801, 10.44341969],
-					"label": "Precipitation (mm/day)",
+					"label": "Precipitation",
 					"yAxisID":"y2"
 				  }
 				],
@@ -1119,14 +1218,14 @@
 					"y1": { 
 							title: {
 								display: true,
-								text: 'Deforestation Km\u00B2'						
+								text: 'Deforestation (km\u00B2)'						
 							},
 						position: 'left'
 					},
 					"y2": {
 							title: {
 								display: true,
-								text: 'Precipitation mm/day'						
+								text: 'Precipitation (mm/day)'						
 							},
 						position: 'right',
 						grid: {
@@ -1157,15 +1256,15 @@
 					"borderColor": "rgb(165,15,21)",
 					"fill": false,
 					"data": [27.718, 4.07, 1.8, 42.48, 4.924, 13.552, 2.344, 29.688, 87.424, 37.168, 25.976, 4.184],
-					"label": "Deforestation (Km\u00B2)",
+					"label": "Deforestation",
 					"yAxisID":"y1"
 				  },
 				  {
-					"backgroundColor": "rgb(39, 176, 200)",
-					"borderColor": "rgb(39, 176, 200)",
+					"backgroundColor": "rgb(8,81,156)",
+					"borderColor": "rgb(8,81,156)",
 					"fill": false,
 					"data": [8.682142972, 12.62437333, 11.56642087, 8.811882839, 3.618205447, 1.155493223, 0.716872719, 0.346232603, 0.627226216, 1.625703192, 5.090730096, 6.503446867],
-					"label": "Precipitation (mm/day)",
+					"label": "Precipitation",
 					"yAxisID":"y2"
 				  }
 				],
@@ -1186,25 +1285,25 @@
 					"borderColor": "rgb(1165,15,21)",
 					"fill": false,
 					"data": [482, 435, 865, 773, 932, 684, 1030, 1376, 1243, 1316, 1257, 1273, 1673],
-					"label": "Deforestation (Km\u00B2)",
+					"label": "Deforestation",
 					"yAxisID":"y1",
 					"order": 2
 				  },
 				  {
-					"backgroundColor": "rgb(39, 176, 200)",
-					"borderColor": "rgb(39, 176, 200)",
+					"backgroundColor": "rgb(8,81,156)",
+					"borderColor": "rgb(8,81,156)",
 					"fill": false,
 					"data": [8.12, 6.92, 7.91, 7.31, 7.86, 8.11, 7.26, 7.45, 7.70, 7.09, 8.13, 7.12, 7.67],
-					"label": "Precipitation (mm/day)",
+					"label": "Precipitation",
 					"type": 'line',
 					"yAxisID":"y2"
 				  },
 				  {
-					"backgroundColor": "rgb(255, 99, 132)",
-					"borderColor": "rgb(255, 99, 132)",
+					"backgroundColor": "rgb(203,201,226)",
+					"borderColor": "rgb(203,201,226)",
 					"fill": false,
-					"data": [19725010, 23907887, 27574714, 30112720, 31121413, 34030982, 36563333, 39460359, 43516147, 44913978, 47091336],
-					"label": "GDP (1 million BRL)",
+					"data": [19.725, 23.908, 27.575, 30.113, 31.121, 34.031, 36.563, 39.461, 43.516, 44.914, 47.0913],
+					"label": "GDP",
 					"type": 'line',
 					"yAxisID":"y3"
 				  }
@@ -1239,14 +1338,14 @@
 					"y1": {
 							title: {
 								display: true,
-								text: 'Deforestation Km\u00B2'						
+								text: 'Deforestation (km\u00B2)'						
 							},
 						position: 'left'
 					},
 					"y2": { 
 							title: {
 								display: true,
-								text: 'Precipitation mm/day'						
+								text: 'Precipitation (mm/day)'						
 							},
 						position: 'right',
 						grid: {
@@ -1256,7 +1355,7 @@
 					"y3": {
 							title: {
 								display: true,
-								text: 'GDP (1 million BRL)'						
+								text: 'GDP (1 billion BRL)'						
 							},
 						position: 'right',
 						grid: {
@@ -1285,25 +1384,25 @@
 					"borderColor": "rgb(1165,15,21)",
 					"fill": false,
 					"data": [61, 49, 40, 52, 74, 50, 57, 58, 31, 25, 23, 25, 37],
-					"label": "Deforestation (Km\u00B2)",
+					"label": "Deforestation",
 					"yAxisID":"y1",
 					"order": 2
 				  },
 				  {
-					"backgroundColor": "rgb(39, 176, 200)",
-					"borderColor": "rgb(39, 176, 200)",
+					"backgroundColor": "rgb(8,81,156)",
+					"borderColor": "rgb(8,81,156)",
 					"fill": false,
 					"data": [6.48, 4.63, 5.74, 4.40, 5.33, 4.70, 3.84, 4.31, 5.18, 5.33, 4.68, 5.16, 5.23],
-					"label": "Precipitation (mm/day)",
+					"label": "Precipitation",
 					"type": 'line',
 					"yAxisID":"y2"
 				  },
 				  {
-					"backgroundColor": "rgb(255, 99, 132)",
-					"borderColor": "rgb(255, 99, 132)",
+					"backgroundColor": "rgb(203,201,226)",
+					"borderColor": "rgb(203,201,226)",
 					"fill": false,
-					"data": [13689804, 16404816, 18345688, 20684430, 23796656, 26189323, 28930291, 31584816, 34108132, 35666183, 39355941],
-					"label": "GDP (1 million BRL)",
+					"data": [13.689804, 16.404816, 18.345688, 20.684430, 23.796656, 26.189323, 28.930291, 31.584816, 34.108132, 35.666183, 39.355941],
+					"label": "GDP",
 					"type": 'line',
 					"yAxisID":"y3"
 				  }
@@ -1321,7 +1420,17 @@
 			var ctx = document.getElementById("scatterplot").getContext('2d');
 
 			// Define the data 
-			var data3 = [{
+			var data5 = {
+				"datasets": [
+				  {       
+					label: "Rondônia",
+					borderColor: '#2196f3',
+					backgroundColor: '#2196f3', 
+					trendlineLinear: {
+						lineStyle: "solid",
+						width: 2
+						},
+					data: [{
 							x: 9.8625856866,
 							y: 19.624
 						}, {
@@ -1368,55 +1477,17 @@
 							x: 10.4434196884,
 							y: 33.356
 						}
-					 ]; // Add data values to array
-			// End Defining data
-			var options_scatter = {responsive: true, // Instruct chart js to respond nicely.
-				maintainAspectRatio: false,
-				scales: {
-					y: {
-					  title: {
-						display: true,
-						text: 'Deforestation Km\u00B2'
-					  }
-					},
-					x: {
-					  title: {
-						display: true,
-						text: 'Precipitation mm/day'
-					  }
-					}
+					 ]
 				},
-				interaction: {
-						mode: 'index',
-						intersect: false
-					}				// Add to prevent default behaviour of full-width/height 
-			};
-
-			// End Defining data
-			var myChart3 = new Chart(ctx, {
-				type: 'scatter',
-				data: {
-					datasets: [{
-							label: 'Deforestation - Precipitation correlation in Rondonia', // Name the series
-							data: data3, // Specify the data values array
-					  borderColor: '#2196f3', // Add custom color border            
-					  backgroundColor: '#2196f3', 
-					  trendlineLinear: {
-							lineStyle: "solid",
-							width: 2
-						}// Add custom color background (Points and Fill)
-					}]
-				},
-				options: options_scatter
-			});
-			
-			
-			// SCATTER Plot 2
-			
-			var ctx = document.getElementById("scatterplot2").getContext('2d');
-
-			// Define the data 
-			var data4 = [{
+				{
+					label: "Tocatins",
+					borderColor: '#f49968',
+					backgroundColor: '#f49968',
+					trendlineLinear: {
+						lineStyle: "solid",
+						width: 2
+						},
+					data: [{
 							x: 8.68214297199991,
 							y: 27.718
 						}, {
@@ -1463,27 +1534,46 @@
 							x: 6.50344686698301,
 							y: 4.184
 						}
-					 ]; // Add data values to array
+					 ]
+				}]
+			};
+					 
 			// End Defining data
-			
+			var options_scatter = {responsive: true, // Instruct chart js to respond nicely.
+				maintainAspectRatio: false,
+				scales: {
+					y: {
+					  title: {
+						display: true,
+						text: 'Deforestation (km\u00B2)'
+					  }
+					},
+					x: {
+					  title: {
+						display: true,
+						text: 'Precipitation (mm/day)'
+					  }
+					}
+				},
+				interaction: {
+						mode: 'index',
+						intersect: false
+					}				// Add to prevent default behaviour of full-width/height 
+			};
 
 			// End Defining data
-			var myChart4 = new Chart(ctx, {
+			var myChart5 = new Chart(ctx, {
 				type: 'scatter',
-				data: {
-					datasets: [{
-							label: 'Deforestation - Precipitation correlation in Tocantins', // Name the series
-							data: data4, // Specify the data values array
-					  borderColor: '#2196f3', // Add custom color border            
-					  backgroundColor: '#2196f3', 
-					  trendlineLinear: {
-							lineStyle: "solid",
-							width: 2
-						}// Add custom color background (Points and Fill)
-					}]
-				},
+				data: data5,
 				options: options_scatter
-			});
+			});			
+			
+			function downloadimage() {
+				var a = document.createElement('a');
+				a.href = myChart4.toBase64Image();
+				a.download = "second chart.png";
+				a.click();			
+			}
 		</script>
 	</body>
 </html>

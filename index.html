@@ -858,9 +858,9 @@
 					loadTiffPrecip('data/meanmonths/precip_'+String(month).padStart(2, '0')+'.tif', true);
 					setLegend_gradient_dynamic([0, 0.085], 'mm/day', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
 				} else if (e.name === 'NIRv (mean)') {
-					if (layerPrecip != null) {
+					/*if (layerPrecip != null) {
 						layerPrecip.hide();
-					}
+					}*/
 					dynamic_currentlayer = "nirv";
 					loadTiffNirv('data/nirv_months/nirv_'+String(month).padStart(2, '0')+'.tif', true);
 					setLegend_gradient_dynamic([0, 0.3755], '', chroma.scale(['rgba(0,0,0,0)','rgba(0,100,0,0.2)', 'rgba(0,100,0,0.4)', 'rgba(0,100,0,0.6)' , 'rgba(0,100,0,0.82)' , 'darkgreen']).colors(6), map_dynamic);
@@ -968,10 +968,10 @@
 					
 			}
 			
-			function loadTiffNirv(filename, add) {
+			function loadTiffNirv(filename, add, initial) {
 				dynamic_currentlayer = "nirv";
 				d3.request(filename).responseType('arraybuffer').get( function (error, tiffData) {
-				
+									
 					// if there is a geotiff layer loaded, remove it first
 					if (layerNirv != null && layerNirv._visible != false) {
 						//layerNirv.remove();
@@ -985,10 +985,15 @@
 							attribution: ''
 							});
 					nirv_range = nirv.range;
-					//console.log(nirv_range)					
+					//console.log(nirv_range)	
+						
 					
 					// what happens upon mouse hover over the raster
 					layerNirv.on("mousemove", function(e) {
+						if (tifftooltip_precip.isOpen()) {
+							map_dynamic.closeTooltip(tifftooltip_precip);
+						}
+					
 						// mouse moved
 						if (e.value !== null) {							// value under mouse is not null
 							if (tifftooltip_nirv !== null) {			// if tifftooltip is already open, close the previous tooltip so it does not get stuck on map
@@ -1007,6 +1012,8 @@
 					});
 					
 					if (add) {
+						layerPrecip.setOpacity(0);
+						
 						// add the geotiff layer to map
 						layerNirv.addTo(map_dynamic);		
 					}						
@@ -1022,12 +1029,11 @@
 					//Object.assign(overlayMaps_dynamic, { "NIRv (mean)": layerNirv }); 
 					//layerControl_dynamic = L.control.layers(overlayMaps_dynamic, {"States": dynamicmap_stateborders}, {collapsed:false}).addTo(map_dynamic); 
 				  
-				});	
-					
+				});		
 			}
 			
 			// load by default
-			loadTiffNirv('data/nirv_months/nirv_01.tif', false);
+			loadTiffNirv('data/nirv_months/nirv_01.tif', false, true);
 			loadTiffPrecip('data/meanmonths/precip_01.tif', true);
 				
 			function datumBeall(ho){
@@ -1198,7 +1204,7 @@
 			map_2.on('baselayerchange', function (e) {
 				map_2.removeControl(legend_r2correl);
 				if (e.name === 'Slope ') {
-					setLegend_gradient_r2correl([-0.1, 0.1], '', chroma.scale(['#2c7bb6', '#97bedb', '#ffffff', '#ec9490', '#d7191c']).colors(5));
+					setLegend_gradient_r2correl([-150, 5], '', chroma.scale(['#2166ac', '#67a9cf', '#d1e5f0', '#f7f7f7', '#fddbc7']).colors(5));
 				} else if (e.name === 'R<sup>2</sup>') {
 					setLegend_gradient_r2correl([0.02, 0.905], '', chroma.scale(['#999999', '#777777', '#555555', '#333333', '#111111']).colors(5));
 				} 

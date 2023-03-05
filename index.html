@@ -530,41 +530,45 @@
 			function stilus_slope(feature){
 				var p = feature.properties;
 				
-				if (p.slope_slope == "y =-0.003x+8.253") {
+				if (p.slope_slope == "y = -149,26x + 1623,8") {
 					return {
-						color: '#2c7bb6'
+						color: '#2166ac'
 					}
-				} else if (p.slope_slope == "y =-0.004x+7.036"){
+				} else if (p.slope_slope == "y = -82,858x + 932,84"){
 					return {
-						color: '#2c7bb6'
+						color: '#2166ac'
 					};
-				} else if (p.slope_slope == "y =0.005x+2.974"){
+				} else if (p.slope_slope == "y = -27,99x + 329,07"){
 					return {
-						color: '#2c7bb6'
+						color: '#67a9cf'
 					};
-				} else if (p.slope_slope == "y =-0.018x+4.110"){
+				} else if (p.slope_slope == "y = -23,818x + 250,64"){
 					return {
-						color: '#97bedb'
+						color: '#67a9cf'
 					};
-				} else if (p.slope_slope == "y =-0.027x+10.683"){
+				} else if (p.slope_slope == "y = -11,405x + 112,21"){
 					return {
-						color: '#ffffff'
+						color: '#d1e5f0'
 					};
-				} else if (p.slope_slope == "y =0.032x+3.073"){
+				} else if (p.slope_slope == "y = -10,846x + 82,289"){
 				 	return {
-						color: '#ffffff'
+						color: '#d1e5f0'
 					};
-				} else if (p.slope_slope == "y =-0.038x+10.078"){
+				} else if (p.slope_slope == "y = -1,9731x + 33,534"){
 					return {
-						color: '#ec9490'
+						color: '#f7f7f7'
 					};
-				} else if (p.slope_slope == "y =-0.063x+6.600"){
+				} else if (p.slope_slope == "y = 3,8565x + 32,91"){
 					return {
-						color: '#d7191c'
+						color: '#fddbc7'
+					};
+				} else if (p.slope_slope == "y = 4,0917x - 2,8023"){
+					return {
+						color: '#fddbc7'
 					};
 				} else {
 					return {
-						color: '#d7191c'
+						color: '#000000'
 					};
 				}
 			}
@@ -651,76 +655,12 @@
 				"GDP": mainmap_gdp
 			};
 			
-			// GeoTIFF for nirv
+			var layerControl = L.control.layers(overlayMaps, null, {collapsed:false}).addTo(map); 
+			
 			var tifftooltip_nirv;
-			var tiff_url_nirv = "data/totalnirv.tif";
-			d3.request(tiff_url_nirv).responseType('arraybuffer').get( function (error, tiffData) {
-			
-				let nirv = L.ScalarField.fromGeoTIFF(tiffData.response, bandIndex = 0);
-				let layerNirv = L.canvasLayer.scalarField(nirv, {
-						color: chroma.scale(['#1C6FF8', '#27BBE0', '#31DB92', '#1BF118', '#9BFA24', '#FEF720']).domain(nirv.range),		// first the colors from-to (can be 3+ colors too, but fix legend too), then in domain part: get the min and max values of dataset
-						opacity: 1
-				});
-				
-				layerNirv.on("mousemove", function(e) {
-					// mouse moved
-					if (e.value !== null) {							// value under mouse is not null
-						if (tifftooltip_nirv !== null) {			// if tifftooltip_nirv is already open, close the previous tooltip so it does not get stuck on map
-							map.closeTooltip(tifftooltip_nirv);
-						}
-						// create tooltip:
-						tifftooltip_nirv = L.tooltip()
-							.setLatLng(e.latlng)
-							.setContent(parseFloat(`${e.value}`).toFixed(3));
-						map.openTooltip(tifftooltip_nirv);			// open tooltip
-					} else {										// value is null
-						if (tifftooltip_nirv !== null) {			// if any tooltip is open, close it since we went elsewhere from the area with the cursor, so previous one does not get stuck
-							map.closeTooltip(tifftooltip_nirv);
-						}
-					}
-				});
-				
-				// lets add the tiff layer to the overlayMaps object (which lists our switchable layers)
-				Object.assign(overlayMaps, { "NIRv": layerNirv });
-				
-				// enable (show) the layer switcher - DO THIS AFTER ADDING THE LAST LAYER IN CODE
-				var layerControl = L.control.layers(overlayMaps, null, {collapsed:false}).addTo(map); 
-			  
-			});
-			
-			// GeoTIFF for precip
 			var tifftooltip_precip;
-			var tiff_url_precip = "data/meantotal.tif";
-			d3.request(tiff_url_precip).responseType('arraybuffer').get( function (error, tiffData) {
 			
-				let precip = L.ScalarField.fromGeoTIFF(tiffData.response, bandIndex = 0);
-				let layerprecip = L.canvasLayer.scalarField(precip, {
-						color: chroma.scale(['red', 'orange', 'yellow', 'green', 'cyan', 'blue']).domain(precip.range),		// first the colors from-to (can be 3+ colors too, but fix legend too), then in domain part: get the min and max values of dataset
-						opacity: 1
-				});
-				
-				layerprecip.on("mousemove", function(e) {
-					// mouse moved
-					if (e.value !== null) {							// value under mouse is not null
-						if (tifftooltip_precip !== null) {			// if tifftooltip_nirv is already open, close the previous tooltip so it does not get stuck on map
-							map.closeTooltip(tifftooltip_precip);
-						}
-						// create tooltip:
-						tifftooltip_precip = L.tooltip()
-							.setLatLng(e.latlng)
-							.setContent(parseFloat(`${e.value*1000}`).toFixed(3)+ ' mm/day');
-						map.openTooltip(tifftooltip_precip);			// open tooltip
-					} else {										// value is null
-						if (tifftooltip_precip !== null) {			// if any tooltip is open, close it since we went elsewhere from the area with the cursor, so previous one does not get stuck
-							map.closeTooltip(tifftooltip_precip);
-						}
-					}
-				});
-				
-				// lets add the tiff layer to the overlayMaps object (which lists our switchable layers)
-				Object.assign(overlayMaps, { "Precipitation": layerprecip });			
-			  
-			});
+			
 			
 			
 			// HIGHCHARTS - DEPENDENCY WHEEL:
@@ -1253,7 +1193,7 @@
 				legend_r2correl.addTo(map_2);
 			};
 			
-			setLegend_gradient_r2correl([-0.1, 0.1], '', chroma.scale(['#2c7bb6', '#97bedb', '#ffffff', '#ec9490', '#d7191c']).colors(5));
+			setLegend_gradient_r2correl([-150, 5], '', chroma.scale(['#2166ac', '#67a9cf', '#d1e5f0', '#f7f7f7', '#fddbc7']).colors(5));
 			
 			map_2.on('baselayerchange', function (e) {
 				map_2.removeControl(legend_r2correl);
@@ -1578,7 +1518,7 @@
 					 ]
 				},
 				{
-					label: "Tocatins",
+					label: "Tocantins",
 					borderColor: '#f49968',
 					backgroundColor: '#f49968',
 					trendlineLinear: {

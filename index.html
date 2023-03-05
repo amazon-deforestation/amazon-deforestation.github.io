@@ -318,7 +318,7 @@
 			
 			<div id="section3" class="section reveal">
 				<h2>What is NIRv?</h2>
-				<iframe frameborder="0" class="juxtapose" width="100%" height="772" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=cf48f9c4-8cfd-11ed-b5bd-6595d9b17862"></iframe>
+				<iframe frameborder="0" class="juxtapose" width="100%" height="863" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=9a6c097a-bb5c-11ed-b5bd-6595d9b17862"></iframe>
 				
 			</div>
 
@@ -877,6 +877,8 @@
 			// DYNAMIC DATA, ANIMATED MAP: //
 			/////////////////////////////////
 			
+			var dynamic_currentlayer;
+			
 			// map div 2, for dynamic data 
 			var map_dynamic = L.map('map_dynamic', {maxBounds: L.latLngBounds(L.latLng(-30, -90), L.latLng(15, -30)),
 									maxBoundsViscosity: 1.0,
@@ -893,7 +895,7 @@
 			var buttonpanelControl = L.control({position: 'bottomleft'});
 			buttonpanelControl.onAdd = function () {
 				  var div = L.DomUtil.create('div');
-				  div.innerHTML = '<div class="leaflet-bar custom-control" style="display: flex; flex-direction: column; align-items: center;"><div style="width: 100%">Precipitation 2001-2021 (monthly mean)</div><div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; width: 100%;">						<span id="month" style="width: 20%;"> </span> <div><input id="loopcheckbox" name="loopcheckbox" type="checkbox" checked>						<label for="loopcheckbox">Loop</label></div><input type="button" value="Start" onclick="startStop(this)" />						</div><input id="monthslider" type="range" min="1" max="12" oninput="datumBeall(this.value)" style="width: 200px"/></div>';	
+				  div.innerHTML = '<div class="leaflet-bar custom-control" style="display: flex; flex-direction: column; align-items: center;"><div style="width: 100%; display: flex; justify-content: center;">2001-2021 (monthly mean)</div><div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; width: 100%;">						<span id="month" style="width: 20%;"> </span> <div><input id="loopcheckbox" name="loopcheckbox" type="checkbox" checked>						<label for="loopcheckbox">Loop</label></div><input type="button" value="Start" onclick="startStop(this)" />						</div><input id="monthslider" type="range" min="1" max="12" oninput="datumBeall(this.value)" style="width: 200px"/></div>';	
 				  
 					L.DomEvent.disableClickPropagation(div);
 				  return div;
@@ -906,14 +908,33 @@
 				map_dynamic.dragging.enable();
 			});
 					
+			map_dynamic.on('baselayerchange', function (e) {
+				map.removeControl(legend_dyn);
+				if (e.name === 'Precipitation (mean)') {
+					if (layerNirv != null) {
+						layerNirv.hide();
+					}
+					dynamic_currentlayer = "precip";
+					loadTiffPrecip('data/meanmonths/precip_'+String(month).padStart(2, '0')+'.tif', true);
+					setLegend_gradient_dynamic([0, 0.085], 'mm/day', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
+				} else if (e.name === 'NIRv (mean)') {
+					if (layerPrecip != null) {
+						layerPrecip.hide();
+					}
+					dynamic_currentlayer = "nirv";
+					loadTiffNirv('data/nirv_months/nirv_'+String(month).padStart(2, '0')+'.tif', true);
+					setLegend_gradient_dynamic([0, 0.3755], '', chroma.scale(['rgba(0,0,0,0)','rgba(0,100,0,0.2)', 'rgba(0,100,0,0.4)', 'rgba(0,100,0,0.6)' , 'rgba(0,100,0,0.82)' , 'darkgreen']).colors(6), map_dynamic);
+				}
+			});
+			
 			// DYNAMIC MAP: LEGEND for GRADIENTS
 			function setLegend_gradient_dynamic(values, unit, colors, targetmap){
-				legend = L.control({position: 'bottomright'});
-				legend.onAdd = function(map_dynamic) {
+				legend_dyn = L.control({position: 'bottomright'});
+				legend_dyn.onAdd = function(map_dynamic) {
 					var div = L.DomUtil.create("div");
 					var content = '<div id="legenddiv" class="leaflet-bar custom-control legend">';
 						content += '<div style="display: flex; flex-direction: column; margin-top: 4px; width: 130px;">';
-							content += '<div style="background: linear-gradient(to right, '+colors[0]+', '+colors[1]+'); width: 100%; height: 14px;"></div>';
+							content += '<div style="background: linear-gradient(to right, '+colors[0]+', '+colors[colors.length-1]+'); width: 100%; height: 14px;"></div>';
 							content += '<div style="display: flex; flex-direction: row; justify-content: space-between;"><span>'+values[0]*1000+'</span><span>'+values[1]*1000+'</span></div><div style="display: flex; flex-direction: row; justify-content: center;">'+unit+'</div>';
 						content += '</div>';
 					content += '</div>';
@@ -923,7 +944,7 @@
 					return div;
 					
 				};
-				legend.addTo(map_dynamic);
+				legend_dyn.addTo(map_dynamic);
 			};
 			
 			var month = 1;
@@ -942,16 +963,24 @@
 							
 			// GeoTIFF in dynamic map
 			var layerPrecip;
+			var layerNirv;
 			var tifftooltip_precip;
 			var layerControl_dynamic;
 			var precip_range;
 			
-			function loadTiff(filename) {
+			var overlayMaps_dynamic = { 
+				/*"Precipitation (mean)": layerPrecip,
+				"NIRv (mean)": layerNirv*/
+				};
+			
+			function loadTiffPrecip(filename, add) {
+				dynamic_currentlayer = "precip";
 				d3.request(filename).responseType('arraybuffer').get( function (error, tiffData) {
 				
 					// if there is a geotiff layer loaded, remove it first
-					if (layerPrecip != null) {
-						layerPrecip.remove();
+					if (layerPrecip != null && layerPrecip._visible != false) {
+						//layerPrecip.remove();
+						layerPrecip.hide();
 					}
 				
 					let precip = L.ScalarField.fromGeoTIFF(tiffData.response, bandIndex = 0);
@@ -982,29 +1011,98 @@
 						}
 					});
 					
-					// add the geotiff layer to map
-					layerPrecip.addTo(map_dynamic);										
+					if (add) {
+						// add the geotiff layer to map
+						layerPrecip.addTo(map_dynamic);		
+					}					
 					
 					// if there is no layer switcher yet, create one
 					if (layerControl_dynamic == null) {
 						setLegend_gradient_dynamic([0, 0.085], 'mm/day', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
 						// first run, add to map so we see by default, create layer switcher
-						overlayMaps_dynamic = { "Precipitation (mean)": layerPrecip };
-						layerControl_dynamic = L.control.layers(overlayMaps_dynamic, {"States": dynamicmap_stateborders}, {collapsed:false}).addTo(map_dynamic); 
+						Object.assign(overlayMaps_dynamic, { "Precipitation (mean)": layerPrecip, "NIRv (mean)": layerNirv }); 
+						layerControl_dynamic = L.control.layers(overlayMaps_dynamic, {"States": dynamicmap_stateborders}, {collapsed:false}).addTo(map_dynamic);
 					}
 				  
 				});	
 					
 			}
 			
+			function loadTiffNirv(filename, add) {
+				dynamic_currentlayer = "nirv";
+				d3.request(filename).responseType('arraybuffer').get( function (error, tiffData) {
+				
+					// if there is a geotiff layer loaded, remove it first
+					if (layerNirv != null && layerNirv._visible != false) {
+						//layerNirv.remove();
+						layerNirv.hide();
+					}
+					
+					let nirv = L.ScalarField.fromGeoTIFF(tiffData.response, bandIndex = 0);
+					layerNirv = L.canvasLayer.scalarField(nirv, {
+							color: chroma.scale(['rgba(0,0,0,0)','rgba(0,100,0,0.2)', 'rgba(0,100,0,0.4)', 'rgba(0,100,0,0.6)' , 'rgba(0,100,0,0.82)' , 'darkgreen']).domain([0, 0.3755]),		// domain: the range. can be precip.range as well, range will be automatic from data then
+							opacity: 1,
+							attribution: ''
+							});
+					nirv_range = nirv.range;
+					//console.log(nirv_range)					
+					
+					// what happens upon mouse hover over the raster
+					layerNirv.on("mousemove", function(e) {
+						// mouse moved
+						if (e.value !== null) {							// value under mouse is not null
+							if (tifftooltip_nirv !== null) {			// if tifftooltip is already open, close the previous tooltip so it does not get stuck on map
+								map_dynamic.closeTooltip(tifftooltip_nirv);
+							}
+							// create tooltip:
+							tifftooltip_nirv = L.tooltip()
+								.setLatLng(e.latlng)
+								.setContent(parseFloat(`${e.value}`).toFixed(3)); 
+							map_dynamic.openTooltip(tifftooltip_nirv);			// open tooltip
+						} else {										// value is null
+							if (tifftooltip_nirv !== null) {			// if any tooltip is open, close it since we went elsewhere from the area with the cursor, so previous one does not get stuck
+								map_dynamic.closeTooltip(tifftooltip_nirv);
+							}
+						}
+					});
+					
+					if (add) {
+						// add the geotiff layer to map
+						layerNirv.addTo(map_dynamic);		
+					}						
+					
+					// if there is no layer switcher yet, create one
+					if (layerControl_dynamic == null) {
+						//setLegend_gradient_dynamic([0, 0.085], '', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
+						// first run, add to map so we see by default, create layer switcher
+						//Object.assign(overlayMaps_dynamic, { "NIRv (mean)": layerNirv }); 
+						//overlayMaps_dynamic = { "NIRv (mean)": layerNirv };
+						//layerControl_dynamic = L.control.layers(overlayMaps_dynamic, {"States": dynamicmap_stateborders}, {collapsed:false}).addTo(map_dynamic); 
+					}
+					//Object.assign(overlayMaps_dynamic, { "NIRv (mean)": layerNirv }); 
+					//layerControl_dynamic = L.control.layers(overlayMaps_dynamic, {"States": dynamicmap_stateborders}, {collapsed:false}).addTo(map_dynamic); 
+				  
+				});	
+					
+			}
+			
 			// load by default
-			loadTiff('data/meanmonths/precip_01.tif');
+			loadTiffNirv('data/nirv_months/nirv_01.tif', false);
+			loadTiffPrecip('data/meanmonths/precip_01.tif', true);
 				
 			function datumBeall(ho){
+				month = ho;
 				document.getElementById('month').innerHTML = swapMonthNumberwithName(parseInt(ho));
-				var nextfilename = 'data/meanmonths/precip_'+String(ho).padStart(2, '0')+'.tif';
-				console.log(nextfilename)
-				loadTiff(nextfilename);				
+				if (dynamic_currentlayer == "precip") {
+					var nextfilename = 'data/meanmonths/precip_'+String(ho).padStart(2, '0')+'.tif';
+					console.log(nextfilename)
+					loadTiffPrecip(nextfilename, true);
+				
+				} else {		
+					var nextfilename = 'data/nirv_months/nirv_'+String(ho).padStart(2, '0')+'.tif';
+					console.log(nextfilename)
+					loadTiffNirv(nextfilename, true);		
+				}
 			}
 			
 			var idozito;
@@ -1012,7 +1110,7 @@
 			function startStop(b){
 				if (b.value=="Start" || b.value=="Replay") {
 					// ha veget ert az animacio, megallt mert nem loopos, es az ujra gombra kattintunk, visszaallitjuk a 2000-re
-					if (month => 12) {
+					if (month >= 12) {
 						month = 0;
 					}
 					// elinditjuk a lejatszast
@@ -1075,13 +1173,13 @@
 					return num;
 				} 
 			}
-			
+			/*
 			map_dynamic.on('baselayerchange', function (e) {
-				map_dynamic.removeControl(legend);
+				map_dynamic.removeControl(legend_dyn);
 				if (e.name === 'Precipitation (mean)') {
 					setLegend_gradient([0, 0.085], 'mm/day', chroma.scale(['black', 'orange']).colors(2), map_dynamic);
 				} 
-			});
+			});*/
 			 
 			 
 			 function tooltip_slope(layer) {

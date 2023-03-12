@@ -224,6 +224,7 @@
 			.chartjsdiv {
 				max-width: 650px;
 				margin: auto;
+				width: 45%;
 			}
 			
 			/* Some mobile optimization */
@@ -266,7 +267,7 @@
 		<div id="topbar">
 			<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%">
 				<img src="stop.jpg" style="height: 75px"></img>
-				<h1 style="font-size: 22px;">Rapidly increasing deforestation of the Amazon rainforest</h1>
+				<h1 style="font-size: 22px;">A call for multi-disciplinary perspectives to combat deforestation of the Amazon rainforest</h1>
 				<div style="display: flex; flex-direction: row; column-gap: 10px; align-items: center;" id="topbar_menubuttons">
 					<a href="#section1">Deforestation by states (jump to sc)</a>
 					<a href="">somethingelse</a>
@@ -285,7 +286,7 @@
 			
 			<div id="section0" class="section reveal">
 				<h2>States Map</h2>
-				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</p>
+				<p>The Amazon forest is the largest tropical forest and a hotspot for biodiversity, sequestering large amounts of carbon and regulating moisture transport across the region. Since the early 2000s ,the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018, following changes in Brazil’s political leadership. Deforestation is a highly complex process, influenced by both natural processes and societal factors, and uncovering this complexity can inform policy-making to reverse the current trend in deforestation. Based on a review of literature and assessment of satellite observations, climate data and key societal metrics, we highlight important interlinkages and feedbacks related to deforestation. Further, we find large regional differences within the Amazon biome and demonstrate that deforestation in the western part of the Amazon basin is more strongly related to variability in natural drivers (e.g. precipitation) than for the eastern and southern regions. Here we will present our preliminary analysis, which underlies our call for multidisciplinary perspectives and concerted action to combat deforestation in the Amazon forest.</p>
 				<div id="map"></div>
 			</div>
 			
@@ -323,17 +324,23 @@
 			</div>
 
 			<div id="section4" class="section reveal">
-				<div class="chartjsdiv">
-					<canvas id="dualaxisChart" width="100%" height="400px"></canvas>
+				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</p>
+				<div style="display: flex; flex-direction; row;">
+					<div class="chartjsdiv">
+						<canvas id="dualaxisChart" width="100%" height="400px"></canvas>
+					</div>
+					<div class="chartjsdiv">
+						<canvas id="dualaxisChart2" width="100%" height="400px"></canvas>
+					</div>
 				</div>
-				<div class="chartjsdiv">
-					<canvas id="dualaxisChart2" width="100%" height="400px"></canvas>
-				</div>
-				<div class="chartjsdiv">
-					<canvas id="dualaxisChart3" width="100%" height="400px"></canvas>
-				</div>
-				<div class="chartjsdiv">
-					<canvas id="dualaxisChart4" width="100%" height="400px"></canvas>
+				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</p>
+				<div style="display: flex; flex-direction; row;">
+					<div class="chartjsdiv">
+						<canvas id="dualaxisChart3" width="100%" height="400px"></canvas>
+					</div>
+					<div class="chartjsdiv">
+						<canvas id="dualaxisChart4" width="100%" height="400px"></canvas>
+					</div>
 				</div>
 				<div class="chartjsdiv">
 					<canvas id="scatterplot" width="100%" height="400px"></canvas>
@@ -362,7 +369,7 @@
 			  for (var i = 0; i < reveals.length; i++) {
 				var windowHeight = window.innerHeight;
 				var elementTop = reveals[i].getBoundingClientRect().top;
-				var elementVisible = 150;
+				var elementVisible = 10;
 				if (elementTop < windowHeight - elementVisible) {
 				  reveals[i].classList.add("active");
 				} else {
@@ -402,23 +409,23 @@
 				
 				if (p.deforestation_average_deforestation_average > 8.0900) {
 					return {
-						color: '#a50f15'
+						fillColor: '#a50f15'
 					}
 				} else if (p.deforestation_average_deforestation_average > 5.9100){
 					return {
-						color: '#de2d26'
+						fillColor: '#de2d26'
 					};
 				} else if (p.deforestation_average_deforestation_average > 2.4000){
 					return {
-						color: '#fb6a4a'
+						fillColor: '#fb6a4a'
 					};
 				} else if (p.deforestation_average_deforestation_average > 0.6701){
 					return {
-						color: '#fc9272'
+						fillColor: '#fc9272'
 					};
 				} else {
 					return {
-						color: '#fcbba1'
+						fillColor: '#fcbba1'
 					};
 				}
 			} 
@@ -428,23 +435,23 @@
 				
 				if (p.nirv_average_Average > 0.24327) {
 					return {
-						color: '#000c00'
+						fillColor: '#000c00'
 					}
 				} else if (p.nirv_average_Average > 0.22448){
 					return {
-						color: '#004000'
+						fillColor: '#004000'
 					};
 				} else if (p.nirv_average_Average > 0.20270){
 					return {
-						color: '#008000'
+						fillColor: '#008000'
 					};
 				} else if (p.nirv_average_Average > 0.15989){
 					return {
-						color: '#7fbf7f'
+						fillColor: '#7fbf7f'
 					};
 				} else {
 					return {
-						color: '#e5f2e5'
+						fillColor: '#e5f2e5'
 					};
 				}
 			}
@@ -480,23 +487,23 @@
 				
 				if (p.population_average_population_average > 6.180) {
 					return {
-						color: '#4c4c00'
+						fillColor: '#a63603'
 					}
 				} else if (p.population_average_population_average > 4.790){
 					return {
-						color: '#7f7f00'
+						fillColor: '#e6550d'
 					};
 				} else if (p.population_average_population_average > 3.210){
 					return {
-						color: '#b2b200'
+						fillColor: '#fd8d3c'
 					};
 				} else if (p.population_average_population_average > 1.911){
 					return {
-						color: '#e5e500'
+						fillColor: '#fdbe85'
 					};
 				} else {
 					return {
-						color: '#ffff00'
+						fillColor: '#feedde'
 					};
 				}
 			}
@@ -506,23 +513,23 @@
 				
 				if (p.gdp_average_gdp_average > 98.75) {
 					return {
-						color: '#111111'
+						fillColor: '#54278f'
 					}
 				} else if (p.gdp_average_gdp_average > 72.12){
 					return {
-						color: '#333333'
+						fillColor: '#756bb1'
 					};
 				} else if (p.gdp_average_gdp_average > 26.25){
 					return {
-						color: '#555555'
+						fillColor: '#9e9ac8'
 					};
 				} else if (p.gdp_average_gdp_average > 9.75){
 					return {
-						color: '#777777'
+						fillColor: '#cbc9e2'
 					};
 				} else {
 					return {
-						color: '#999999'
+						fillColor: '#f2f0f7'
 					};
 				}
 			}
@@ -532,43 +539,43 @@
 				
 				if (p.slope_slope == "y = -149,26x + 1623,8") {
 					return {
-						color: '#2166ac'
+						fillColor: '#2166ac'
 					}
 				} else if (p.slope_slope == "y = -82,858x + 932,84"){
 					return {
-						color: '#2166ac'
+						fillColor: '#2166ac'
 					};
 				} else if (p.slope_slope == "y = -27,99x + 329,07"){
 					return {
-						color: '#67a9cf'
+						fillColor: '#67a9cf'
 					};
 				} else if (p.slope_slope == "y = -23,818x + 250,64"){
 					return {
-						color: '#67a9cf'
+						fillColor: '#67a9cf'
 					};
 				} else if (p.slope_slope == "y = -11,405x + 112,21"){
 					return {
-						color: '#d1e5f0'
+						fillColor: '#d1e5f0'
 					};
 				} else if (p.slope_slope == "y = -10,846x + 82,289"){
 				 	return {
-						color: '#d1e5f0'
+						fillColor: '#d1e5f0'
 					};
 				} else if (p.slope_slope == "y = -1,9731x + 33,534"){
 					return {
-						color: '#f7f7f7'
+						fillColor: '#f7f7f7'
 					};
 				} else if (p.slope_slope == "y = 3,8565x + 32,91"){
 					return {
-						color: '#fddbc7'
+						fillColor: '#fddbc7'
 					};
 				} else if (p.slope_slope == "y = 4,0917x - 2,8023"){
 					return {
-						color: '#fddbc7'
+						fillColor: '#fddbc7'
 					};
 				} else {
 					return {
-						color: '#000000'
+						fillColor: '#000000'
 					};
 				}
 			}
@@ -578,23 +585,23 @@
 				
 				if (p.correlation_r2_values_leaflet_r2 > 0.8) {
 					return {
-						color: '#111111'
+						fillColor: '#7a0177'
 					}
 				} else if (p.correlation_r2_values_leaflet_r2 > 0.38){
 					return {
-						color: '#333333'
+						fillColor: '#c51b8a'
 					};
 				} else if (p.correlation_r2_values_leaflet_r2 > 0.201){
 					return {
-						color: '#555555'
+						fillColor: '#f768a1'
 					};
 				} else if (p.correlation_r2_values_leaflet_r2 > 0.02){
 					return {
-						color: '#777777'
+						fillColor: '#fbb4b9'
 					};
 				} else {
 					return {
-						color: '#999999'
+						fillColor: '#feebe2'
 					};
 				}
 			}
@@ -611,8 +618,7 @@
 					// when we go off the feature, return to default style
 					layer.on('mouseout', function () {
 						this.setStyle({
-							'fillColor': feature.properties.fillColor,
-							'weight': '4',
+							'weight': '2',
 							'fillOpacity': '0.7'
 							
 						});
@@ -638,11 +644,11 @@
 			x.open('get', 'data/main_map_2.geojson', false);
 			x.send();
 			var d=JSON.parse(x.responseText);
-			var mainmap_deforestation = L.geoJSON(d,{style: stilus_deforestation, onEachFeature: mousehighlight, fillOpacity: 0.7}).bindTooltip(tooltip_deforestation);
+			var mainmap_deforestation = L.geoJSON(d,{style: stilus_deforestation, onEachFeature: mousehighlight, color: 'white', weight: 2, fillOpacity: 0.7}).bindTooltip(tooltip_deforestation);
 				mainmap_deforestation.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
-			var mainmap_population = L.geoJSON(d,{style: stilus_population, onEachFeature: mousehighlight, fillOpacity: 0.7}).bindTooltip(tooltip_population);
+			var mainmap_population = L.geoJSON(d,{style: stilus_population, onEachFeature: mousehighlight, color: 'white', weight: 2, fillOpacity: 0.7}).bindTooltip(tooltip_population);
 				mainmap_population.getAttribution = function() { return 'Instituto Brasileiro de Geografia e Estatística - IBGE'; };
-			var mainmap_gdp = L.geoJSON(d,{style: stilus_gdp, onEachFeature: mousehighlight, fillOpacity: 0.7}).bindTooltip(tooltip_gdp);
+			var mainmap_gdp = L.geoJSON(d,{style: stilus_gdp, onEachFeature: mousehighlight, color: 'white', weight: 2, fillOpacity: 0.7}).bindTooltip(tooltip_gdp);
 				mainmap_gdp.getAttribution = function() { return 'Instituto Brasileiro de Geografia e Estatística - IBGE'; };
 			
 			// we add the default layer to map to show when page is opened:
@@ -801,11 +807,11 @@
 			map.on('baselayerchange', function (e) {
 				map.removeControl(legend_mainmap);
 				if (e.name === 'Deforestation') {
-					setLegend('Deforestation (%)', [8.0892.toFixed(2), 3.6333.toFixed(2), 1.2308.toFixed(2), 0.4993.toFixed(2)], ['#000000', '#400000', '#800000', '#bf0000', '#ff0000']);
+					setLegend('Deforestation (%)', [8.0892.toFixed(2), 3.6333.toFixed(2), 1.2308.toFixed(2), 0.4993.toFixed(2)], ['#a50f15', '#de2d26', '#fb6a4a', '#fcae91', '#fee5d9']);
 				}  else if (e.name === 'Population density') {
-					setLegend('Population density (per km<sup>2</sup>)', [parseFloat(6.180).toLocaleString(), parseFloat(4.790).toLocaleString(), parseFloat(3.210).toLocaleString(), parseFloat(1.910).toLocaleString()], ['#4c4c00', '#7f7f00', '#b2b200', '#e5e500', '#ffff00']);
+					setLegend('Population density (per km<sup>2</sup>)', [parseFloat(6.180).toLocaleString(), parseFloat(4.790).toLocaleString(), parseFloat(3.210).toLocaleString(), parseFloat(1.910).toLocaleString()], ['#a63603', '#e6550d', '#fd8d3c', '#fdbe85', '#feedde']);
 				} else if (e.name === 'GDP') {
-					setLegend('GDP (R$ 1 billion)', [98.75, 72.75, 26.25, 9.75], ['#111111', '#333333', '#555555', '#777777', '#999999']);
+					setLegend('GDP (R$ 1 billion)', [98.75, 72.75, 26.25, 9.75], ['#54278f', '#756bb1', '#9e9ac8', '#cbc9e2', '#f2f0f7']);
 				} else if (e.name === 'NIRv') {
 					setLegend_gradient([-0.082, 0.332], '', chroma.scale(['white', 'green']).colors(2), map); // first param is labels: [mix, max], second param is the colors from-to (min, then max)
 				} else if (e.name === 'Precipitation') {
@@ -856,7 +862,7 @@
 					}
 					dynamic_currentlayer = "precip";
 					loadTiffPrecip('data/meanmonths/precip_'+String(month).padStart(2, '0')+'.tif', true);
-					setLegend_gradient_dynamic([0, 0.085], 'mm/day', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
+					setLegend_gradient_dynamic([0, 0.085*1000], 'mm/day', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
 				} else if (e.name === 'NIRv (mean)') {
 					/*if (layerPrecip != null) {
 						layerPrecip.hide();
@@ -875,7 +881,7 @@
 					var content = '<div id="legenddiv" class="leaflet-bar custom-control legend">';
 						content += '<div style="display: flex; flex-direction: column; margin-top: 4px; width: 130px;">';
 							content += '<div style="background: linear-gradient(to right, '+colors[0]+', '+colors[colors.length-1]+'); width: 100%; height: 14px;"></div>';
-							content += '<div style="display: flex; flex-direction: row; justify-content: space-between;"><span>'+values[0]*1000+'</span><span>'+values[1]*1000+'</span></div><div style="display: flex; flex-direction: row; justify-content: center;">'+unit+'</div>';
+							content += '<div style="display: flex; flex-direction: row; justify-content: space-between;"><span>'+values[0]+'</span><span>'+values[1]+'</span></div><div style="display: flex; flex-direction: row; justify-content: center;">'+unit+'</div>';
 						content += '</div>';
 					content += '</div>';
 					 
@@ -895,7 +901,7 @@
 			x.open('get', 'data/main_map_2.geojson', false);
 			x.send();
 			var d=JSON.parse(x.responseText);
-			var dynamicmap_stateborders = L.geoJSON(d, {style: function (feature) { return {color: "#ffffff", fill: false} }, onEachFeature: function (feature, layer) {
+			var dynamicmap_stateborders = L.geoJSON(d, {style: function (feature) { return {color: "#ffffff", weight: 2, fill: false} }, onEachFeature: function (feature, layer) {
 				layer.bindTooltip(feature.properties.sigla, {permanent: true, direction:"center"});} });
 				dynamicmap_stateborders.getAttribution = function() { return 'TerraBrasilis'; };
 			dynamicmap_stateborders.addTo(map_dynamic)			
@@ -958,7 +964,7 @@
 					
 					// if there is no layer switcher yet, create one
 					if (layerControl_dynamic == null) {
-						setLegend_gradient_dynamic([0, 0.085], 'mm/day', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
+						setLegend_gradient_dynamic([0, 0.085*1000], 'mm/day', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
 						// first run, add to map so we see by default, create layer switcher
 						Object.assign(overlayMaps_dynamic, { "Precipitation (mean)": layerPrecip, "NIRv (mean)": layerNirv }); 
 						layerControl_dynamic = L.control.layers(overlayMaps_dynamic, {"States": dynamicmap_stateborders}, {collapsed:false}).addTo(map_dynamic);
@@ -1129,7 +1135,7 @@
 			 
 			 
 			 function tooltip_slope(layer) {
-				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Slope: " + layer.feature.properties.slope_slope + "</div>";
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Linear fit: " + layer.feature.properties.slope_slope + "</div>";
 			}
 			function tooltip_r2(layer) {
 				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>R<sup>2</sup>: " + layer.feature.properties.correlation_r2_values_leaflet_r2 + "</div>";
@@ -1154,9 +1160,9 @@
 			x.open('get', 'data/correlation_r2_slope.geojson', false);
 			x.send();
 			var d=JSON.parse(x.responseText);
-			var mainmap_slope = L.geoJSON(d,{style: stilus_slope, onEachFeature: mousehighlight, fillOpacity: 0.7}).bindTooltip(tooltip_slope);
+			var mainmap_slope = L.geoJSON(d,{style: stilus_slope, onEachFeature: mousehighlight, color: 'white', weight: 2, fillOpacity: 0.7}).bindTooltip(tooltip_slope);
 				mainmap_slope.getAttribution = function() { return 'TerraBrasilis: DETER dataset'; };
-			var mainmap_r2 = L.geoJSON(d,{style: stilus_r2, onEachFeature: mousehighlight, fillOpacity: 0.7}).bindTooltip(tooltip_r2);
+			var mainmap_r2 = L.geoJSON(d,{style: stilus_r2, onEachFeature: mousehighlight, color: 'white',  weight: 2, fillOpacity: 0.7}).bindTooltip(tooltip_r2);
 				mainmap_r2.getAttribution = function() { return 'Instituto Brasileiro de Geografia e Estatística - IBGE'; };
 			
 			
@@ -1166,7 +1172,7 @@
 			// list of overlays
 			var overlayMaps_3rd = {
 				
-				"Slope ": mainmap_slope,
+				"Linear fit ": mainmap_slope,
 				"R<sup>2</sup>": mainmap_r2
 			};
 			var layerControl = L.control.layers(overlayMaps_3rd, null, {collapsed:false}).addTo(map_2);
@@ -1203,10 +1209,10 @@
 			
 			map_2.on('baselayerchange', function (e) {
 				map_2.removeControl(legend_r2correl);
-				if (e.name === 'Slope ') {
+				if (e.name === 'Linear fit ') {
 					setLegend_gradient_r2correl([-150, 5], '', chroma.scale(['#2166ac', '#67a9cf', '#d1e5f0', '#f7f7f7', '#fddbc7']).colors(5));
 				} else if (e.name === 'R<sup>2</sup>') {
-					setLegend_gradient_r2correl([0.02, 0.905], '', chroma.scale(['#999999', '#777777', '#555555', '#333333', '#111111']).colors(5));
+					setLegend_gradient_r2correl([0.02, 0.905], '', chroma.scale(['#feebe2', '#fbb4b9', '#f768a1', '#c51b8a', '#7a0177']).colors(5));
 				} 
 			});
 			
@@ -1237,6 +1243,12 @@
 			  };
 			  
 			var options = {
+					plugins: {
+						title: {
+							display: true,
+							text: "Rondônia"
+					}
+				},
 				responsive: true,
 				interaction: {
 					mode: 'index',
@@ -1316,7 +1328,7 @@
 				  "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 			  };
 			  
-			
+			options.plugins.title.text = 'Tocantins';
 			var myChart2 = new Chart(document.getElementById("dualaxisChart2").getContext('2d'), {options: options, data: data2, type: type});
 			
 			
@@ -1357,6 +1369,12 @@
 			  };
 			  
 			  var options2 = {
+					  plugins: {
+							title: {
+								display: true,
+								text: "Rondônia"
+							}
+						},
 				responsive: true,
 				interaction: {
 					mode: 'index',
@@ -1457,6 +1475,7 @@
 		
 			var type = "bar";
 			
+			options2.plugins.title.text = 'Tocantins';
 			var myChart4 = new Chart(document.getElementById("dualaxisChart4").getContext('2d'), {options: options2, data: data4, type: type});
 		
 			// SCATTER Plot 1
@@ -1614,8 +1633,8 @@
 			
 			function downloadimage() {
 				var a = document.createElement('a');
-				a.href = myChart4.toBase64Image();
-				a.download = "second chart.png";
+				a.href = myChart5.toBase64Image();
+				a.download = "myChart5.png";
 				a.click();			
 			}
 		</script>

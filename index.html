@@ -26,6 +26,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.0/chroma.min.js"></script>
 		<!-- for the trendline -->
 		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline"></script>
+		<!-- Juxtapose.js -->
+		<script src="juxtapose/juxtapose.min.js"></script>
+		<link rel="stylesheet" href="juxtapose/juxtapose.css">
 		<style>
 			/* Globals */
 			html, body {
@@ -35,6 +38,7 @@
 				font-style: normal;
 				color: #5D5D5A;
 				background-color: #FFF4E3;
+				scroll-behavior: smooth;
 			} 			
 			p {
 				text-align: justify;
@@ -57,6 +61,7 @@
 			}
 			/* Site-wide image section optional options */
 			.imagesection {
+				position: relative;
 			}
 			/* Site-wide image: text overlay */
 			.cim_a_kepen {
@@ -64,6 +69,17 @@
 				font-weight: bold; 
 				font-size: 15pt;
 				text-shadow: 2px 2px 5px #000000c7;
+			}
+			.cim_a_kepen_position {
+				position: absolute;
+				text-align: center;
+				top: 0;
+				left: 0;
+				height: 100%;
+				padding: 0 15% 0 15%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
 			}
 			
 			.datawrapper_element {
@@ -272,62 +288,95 @@
 				
 				<h1 style="font-size: 26px;">A call for multi-disciplinary perspectives to combat deforestation of the Amazon rainforest</h1>
 				<div style="display: flex; flex-direction: row; column-gap: 10px; align-items: center;" id="topbar_menubuttons">
-					<a href="#section1">Deforestation by states (jump to sc)</a>
-					<a href="">somethingelse</a>
-					<a href="">linktowhatever</a>
+					<a href="#section1">State level indicators</a>
+					<a href="#section2">Gridded variables</a>
+					<a href="#section3">Feedbacks and interactions</a>
+					<a href="#section4">Deforestation</a>
+					<a href="#section5">Process interactions</a>
+					<a href="#section6">Sensitivities</a>
 				</div>
 			</div>
 		</div>
 			
 		<div id="maincontent" style="display: flex; flex-direction: column; row-gap: 20px;">			
 			
-			<div id="imagesection1" class="imagesection">
-				<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" class="cim_a_kepen">The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</div>
+			<div id="imagesection1" class="imagesection">				
 				<img src="forest.jpg" style="max-width: 100%"></img>
+				<div class="cim_a_kepen_position cim_a_kepen">The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</div>
 				<div class="img_wide_caption">Aerial view of the Amazon Rainforest, near Manaus, the capital of the Brazilian state of Amazonas. Author: Neil Palmer (CIAT). Licensed under <a href="https://creativecommons.org/licenses/by-sa/2.0/deed.en">CC BY-SA 2.0</a>.</div>
 			</div>
 			
-			<div id="section0" class="section reveal">
-				<h2>States Map</h2>
-				<p>The Amazon forest is the largest tropical forest and a hotspot for biodiversity, sequestering large amounts of carbon and regulating moisture transport across the region. Since the early 2000s ,the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018, following changes in Brazil’s political leadership. Deforestation is a highly complex process, influenced by both natural processes and societal factors, and uncovering this complexity can inform policy-making to reverse the current trend in deforestation. Based on a review of literature and assessment of satellite observations, climate data and key societal metrics, we highlight important interlinkages and feedbacks related to deforestation. Further, we find large regional differences within the Amazon biome and demonstrate that deforestation in the western part of the Amazon basin is more strongly related to variability in natural drivers (e.g. precipitation) than for the eastern and southern regions. Here we will present our preliminary analysis, which underlies our call for multidisciplinary perspectives and concerted action to combat deforestation in the Amazon forest.</p>
-				<div id="map"></div>
-			</div>
-			
 			<div id="section1" class="section reveal">
-				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</p>
-				<div id="map_dynamic"></div>
-				<p>blablablablablabla blablablablablabla blablablablablabla blablablablablabl bla blabla bla blablablablablabla blablablablablabla blablablablablabla blablablablablabl bla blabla bla blablablablablabla blablablablablabla blablablablablabla blablablablablabl bla blabla bla blablablablablabla blablablablablabla blablablablablabla blablablablablabl bla blabla bla </p>				
-				<div style="display: flex; justify-content: center;"> 
-					<div id="container"></div>
-				</div>
+				<h2>State level indicators</h2>
 				<p>
-					Chart showing a dependency wheel, where each point consists of multiple
-					weighted links to other points. This chart type is often used to
-					visualize data flow, and can be a striking way to illustrate
-					relationships in data.
+					The Amazon forest is the largest tropical forest and a hotspot for biodiversity, sequestering large amounts of carbon and 
+					regulating moisture transport across the region. Since the early 2000s ,the rate of deforestation in the Amazon has steadily 
+					reduced, but is rising again since ~2018, following changes in Brazil’s political leadership. Deforestation is a highly complex 
+					process, influenced by both natural processes and societal factors, and uncovering this complexity can inform policy-making 
+					to reverse the current trend in deforestation. Based on a review of literature and assessment of satellite observations, 
+					climate data and key societal metrics, we highlight important interlinkages and feedbacks related to deforestation. Further,
+					we find large regional differences within the Amazon biome and demonstrate that deforestation in the western part of the Amazon
+					basin is more strongly related to variability in natural drivers (e.g. precipitation) than for the eastern and southern regions.
+					Here we will present our preliminary analysis, which underlies our call for multidisciplinary perspectives and concerted action
+					to combat deforestation in the Amazon forest.
 				</p>
+				<div style="display: flex; flex-direction: row;">
+					<p style="background-color: ; width: 50%">
+						FROM ARTICLE DOCX:<br><br>
+						The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial
+						amounts of carbon, recycling of moisture and supporting biodiversity. Although we refer to the ‘Amazon’	as a single ecosystem, 
+						we stress that this is a heterogeneous area with large spatial and temporal variations.<br><br>
+						To illustrate this, we will explore the variation of several social factors and climatic variables across the Amazon basin and the 
+						neighboring states Maranhao and Tocantins. Fig 1 shows the distribution of some key variables at the state level. The states Amazonas
+						and Roraima in the Western part have relatively low deforestation (Fig 1a), low population density (Fig 1b) and low GDP (Fig 1c). 
+						Deforestation rates are most extreme in the state Rondônia (Fig 1a).
+					</p>
+					<div id="map" style="width: 50%; margin-left: 30px"></div>
+				</div>
 			</div>
 			
 			<div id="section2" class="section reveal">
-				<h2>Deforestation by states (Legal Amazon)</h2>
-				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.  </p>
-				
+				<h2>Gridded variables</h2>
+				<p style="background-color: ">
+					FROM ARTICLE DOCX:<br>
+					Climatic variables also vary over the Amazon basin as demonstrated in Fig. 2. Highest precipitation rates occur in the Western part
+					of the Amazon, with lowest rates occurring in the Eastern part of the Amazon during the dry season (Fig 2b). These different precipitation
+					regimes affect vegetation, which is also reflected in the spatiotemporal variations of near infrared reflectance of vegetation (NIRv), 
+					a remote sensing-based proxy for photosynthesis (Badgley et al., 2017).
+				</p>
+				<div id="map_dynamic"></div>
 			</div>
 			
+			<div id="section3" class="section reveal">
+				<h2>Feedbacks and interactions</h2>
+				<p style="background-color: ">FROM ARTICLE DOCX:<br>
+					There are many interactions and feedbacks between different processes (e.g. Flores & Staal, 2022), here we highlight the most important processes in Fig 3.
+				</p>
+				<div style="display: flex; justify-content: center;"> 
+					<div id="container"></div>
+				</div>
+			</div>
 			
 			<div id="imagesection2" class="imagesection reveal">
 				<img src="fire.jpg" style="max-width: 100%"></img>
 				<div class="img_wide_caption" style="background-color: red;">CAPTION / ATTRIBUTION NEEDED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</div>
 			</div>
 			
-			<div id="section3" class="section reveal">
-				<h2>What is NIRv?</h2>
-				<iframe frameborder="0" class="juxtapose" width="100%" height="863" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=9a6c097a-bb5c-11ed-b5bd-6595d9b17862"></iframe>
-				
+			<div id="section4" class="section reveal">
+				<h2>Deforestation</h2>
+				<p style="background-color: ">FROM ARTICLE DOCX:<br>
+					Rondônia is highly affected by deforestation. This can also be diagnosed directly from visual observations from satellite observations (Fig 4).
+				</p>
+				<div id="juxtapose_wrap" class="juxtapose"></div>
 			</div>
 
-			<div id="section4" class="section reveal">
-				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</p>
+			<div id="section5" class="section reveal">
+				<h2>Process interactions</h2>
+				<p style="background-color: ">FROM ARTICLE DOCX:<br>
+					To quantify relations between different processes we have selected two contrasting states: Rodônia, heavily influenced by deforestation,
+					and Tocantins, which is less heavily affected by deforestation.<br><br>
+					There is a clear wet and dry season for both states, and the peak deforestation occurs during the dry periods (Fig 5a,b). 
+				</p>
 				<div style="display: flex; flex-direction; row;">
 					<div class="chartjsdiv">
 						<canvas id="dualaxisChart" width="100%" height="400px"></canvas>
@@ -336,7 +385,9 @@
 						<canvas id="dualaxisChart2" width="100%" height="400px"></canvas>
 					</div>
 				</div>
-				<p>The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial amounts of carbon, recycling of moisture and supporting biodiversity. Deforestation is one of the major threats that the Amazon is currently facing(Fig 1). Since the early 2000s the rate of deforestation in the Amazon has steadily reduced, but is rising again since ~2018 (Fig 2). Earlier research has shown that deforestation can have a short positive effect on local communities (as expressed by the Human Development Index), but that this effect does not last for long.</p>
+				<p style="background-color: ">In contrast, the annual patterns in deforestation do not have a clear relation to annual precipitation: whereas the deforestation has
+				substantial year-to-year variability (an increase for Rondônia, Fig 5c and a sudden drop after 2016 for Tocantins, Fig 5d), the precipitation
+				is relatively constant.</p>
 				<div style="display: flex; flex-direction; row;">
 					<div class="chartjsdiv">
 						<canvas id="dualaxisChart3" width="100%" height="400px"></canvas>
@@ -345,16 +396,35 @@
 						<canvas id="dualaxisChart4" width="100%" height="400px"></canvas>
 					</div>
 				</div>
-				<div class="chartjsdiv">
-					<canvas id="scatterplot" width="100%" height="400px"></canvas>
-				</div>
 				
 		</div>
 		
-		<div id="section5" class="section reveal">
-
-			<div id="map_2"></div>
-			
+		<div id="section6" class="section reveal">
+			<h2>Sensitivities</h2>
+			<p style="background-color: ">FROM ARTICLE DOCX:<br>
+				Next, we explore the sensitivity between deforestation and precipitation for the states Rondônia and Tocantins (Fig. 6). Whereas for both
+				states we find a negative slope (higher deforestation in dry years), the magnitude of this slope is much larger for Rondônia.
+			</p>
+			<div class="chartjsdiv">
+				<canvas id="scatterplot" width="100%" height="400px"></canvas>
+			</div>
+			<p style="background-color: ">FROM ARTICLE DOCX:<br>
+				Finally, we summarize this relation for all states (Fig 7). The slopes for the different states are mostly negative: indicating more 
+				deforestation in driest periods. The states Roraima and Amapá (with relatively low deforestation rate, Fig 1a) are exceptions to this 
+				rule. The R² shows how strong the correlation between processes is. Overall, we find that the states in the most remote, western regions 
+				of the Amazon are controlled most strongly by variability in the precipitation over this region.
+			</p>
+			<div id="map_2"></div>			
+		</div>
+		
+		<div id="references" class="section reveal">
+			<h3>References</h3>
+			<ul style="font-size: 10pt;">
+				<li>Badgley et al. (2017). Canopy near-infrared reflectance and terrestrial photosynthesis, Science, <a href="https://doi.org/10.1126/sciadv.1602244" target="_blank">https://doi.org/10.1126/sciadv.1602244</a></li>
+				<li>Flores, B. M., & Staal, A. (2022). Feedback in tropical forests of the Anthropocene. Global Change Biology, 28, 5041– 5061. <a href="https://doi.org/10.1111/gcb.16293" target="_blank">https://doi.org/10.1111/gcb.16293</a></li>
+				<li>Hersbach, H, Bell, B, Berrisford, P, et al. The ERA5 global reanalysis. Q J R Meteorol Soc. 2020; 146: 1999– 2049. <a href="https://doi.org/10.1002/qj.3803" target="_blank">https://doi.org/10.1002/qj.3803</a></li>
+				<li>Schaaf, C. & Wang, Z. (2015). MCD43C4 MODIS/Terra+Aqua BRDF/Albedo Nadir BRDF-Adjusted Ref Daily L3 Global 0.05Deg CMG V006 [Data set]. NASA EOSDIS Land Processes DAAC. <a href="https://doi.org/10.5067/MODIS/MCD43C4.006" target="_blank">https://doi.org/10.5067/MODIS/MCD43C4.006</a></li>
+			</ul>
 		</div>
 				
 		<div id="footer">
@@ -366,6 +436,29 @@
 		
 		
 		<script>
+		
+			// Juxtapose JS slider
+			slider = new juxtapose.JXSlider('#juxtapose_wrap',
+				[
+					{
+						src: 'https://github.com/vargalola/deforestation/raw/main/before_defores.png',
+						label: 'December 2001',
+						credit: ''
+					},
+					{
+						src: 'https://github.com/vargalola/deforestation/raw/main/after_defores.png',
+						label: 'December 2021',
+						credit: ''
+					}
+				],
+				{
+					animate: true,
+					showLabels: true,
+					showCredits: true,
+					startingPosition: "50%",
+					makeResponsive: true
+				});
+		
 			// Scroll reveal animation: https://alvarotrigo.com/blog/css-animations-scroll/
 			function reveal() {
 			  var reveals = document.querySelectorAll(".reveal");

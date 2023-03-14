@@ -7,7 +7,7 @@
 		<meta charset="utf-8">
 		
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+		<script src="chartjs/chart.js"></script>
 		<link rel="stylesheet" href="leaflet/leaflet.css" />
 		<script src="leaflet/leaflet.js"></script>
 		<link rel="stylesheet" href="leaflet/leaflet.fullscreen.css" />
@@ -20,12 +20,12 @@
 		<script src="highcharts/export-data.js"></script>
 		<script src="highcharts/accessibility.js"></script>
 		<!-- for reading GeoTIFF: -->
-		<script src="https://d3js.org/d3.v4.min.js"></script>
-		<script src="https://npmcdn.com/geotiff@0.3.6/dist/geotiff.js"></script>
-		<script src="https://ihcantabria.github.io/Leaflet.CanvasLayer.Field/dist/leaflet.canvaslayer.field.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.0/chroma.min.js"></script>
+		<script src="leaflet/d3.v4.min.js"></script>
+		<script src="leaflet/geotiff.js"></script>
+		<script src="leaflet/leaflet.canvaslayer.field.js"></script>
+		<script src="leaflet/chroma.min.js"></script>
 		<!-- for the trendline -->
-		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline"></script>
+		<script src="chartjs/chartjs-plugin-trendline.js"></script>
 		<!-- Juxtapose.js -->
 		<script src="juxtapose/juxtapose.min.js"></script>
 		<link rel="stylesheet" href="juxtapose/juxtapose.css">
@@ -322,7 +322,6 @@
 				</p>
 				<div style="display: flex; flex-direction: row;">
 					<p style="background-color: ; width: 50%">
-						<br><br>
 						The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial
 						amounts of carbon, recycling of moisture and supporting biodiversity. Although we refer to the ‘Amazon’	as a single ecosystem, 
 						we stress that this is a heterogeneous area with large spatial and temporal variations.<br><br>
@@ -338,7 +337,6 @@
 			<div id="section2" class="section reveal">
 				<h2>Gridded variables</h2>
 				<p style="background-color: ">
-					<br>
 					Climatic variables also vary over the Amazon basin as demonstrated in Fig. 2. Highest precipitation rates occur in the Western part
 					of the Amazon, with lowest rates occurring in the Eastern part of the Amazon during the dry season (Fig 2b). These different precipitation
 					regimes affect vegetation, which is also reflected in the spatiotemporal variations of near infrared reflectance of vegetation (NIRv), 
@@ -349,7 +347,7 @@
 			
 			<div id="section3" class="section reveal">
 				<h2>Feedbacks and interactions</h2>
-				<p style="background-color: "><br>
+				<p style="background-color: ">
 					There are many interactions and feedbacks between different processes (e.g. Flores & Staal, 2022), here we highlight the most important processes in Fig 3.
 				</p>
 				<div style="display: flex; justify-content: center;"> 
@@ -364,7 +362,7 @@
 			
 			<div id="section4" class="section reveal">
 				<h2>Deforestation</h2>
-				<p style="background-color: "><br>
+				<p style="background-color: ">
 					Rondônia is highly affected by deforestation. This can also be diagnosed directly from visual observations from satellite observations (Fig 4).
 				</p>
 				<div id="juxtapose_wrap" class="juxtapose"></div>
@@ -372,7 +370,7 @@
 
 			<div id="section5" class="section reveal">
 				<h2>Process interactions</h2>
-				<p style="background-color: "><br>
+				<p style="background-color: ">
 					To quantify relations between different processes we have selected two contrasting states: Rodônia, heavily influenced by deforestation,
 					and Tocantins, which is less heavily affected by deforestation.<br><br>
 					There is a clear wet and dry season for both states, and the peak deforestation occurs during the dry periods (Fig 5a,b). 
@@ -401,14 +399,14 @@
 		
 		<div id="section6" class="section reveal">
 			<h2>Sensitivities</h2>
-			<p style="background-color: "><br>
+			<p style="background-color: ">
 				Next, we explore the sensitivity between deforestation and precipitation for the states Rondônia and Tocantins (Fig. 6). Whereas for both
 				states we find a negative slope (higher deforestation in dry years), the magnitude of this slope is much larger for Rondônia.
 			</p>
 			<div class="chartjsdiv">
 				<canvas id="scatterplot" width="100%" height="400px"></canvas>
 			</div>
-			<p style="background-color: "><br>
+			<p style="background-color: ">
 				Finally, we summarize this relation for all states (Fig 7). The slopes for the different states are mostly negative: indicating more 
 				deforestation in driest periods. The states Roraima and Amapá (with relatively low deforestation rate, Fig 1a) are exceptions to this 
 				rule. The R² shows how strong the correlation between processes is. Overall, we find that the states in the most remote, western regions 

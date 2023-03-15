@@ -243,6 +243,7 @@
 				z-index: 10000;
 				position: relative;
 				box-shadow: 0px -2px 6px 0px #00000038;
+				text-align: center;
 			}
 			
 			#footer div {
@@ -273,7 +274,12 @@
 			}
 			
 			/* Some mobile optimization */
-			@media (max-width: 1125px) {
+			@media (max-width: 1664px) {
+				.cc_bmargin {
+					margin-bottom: 32px !important;
+				}
+			}
+			@media (max-width: 1215px) {
 				.section {
 					padding-left: 20px; 
 					padding-right: 20px;			
@@ -292,6 +298,14 @@
 				.cim_a_kepen {
 					font-size: 12pt;
 				}
+				.cc_bmargin {
+					margin-bottom: 0px !important;
+				}
+			}
+			@media (max-width: 1017px) {
+				.cc_bmargin {
+					margin-bottom: 16px !important;
+				}
 			}
 			@media (max-width: 790px) {
 				h1 {
@@ -303,6 +317,76 @@
 				.img_wide_caption {
 					font-size: 7pt;
 				}
+				#footer {
+					flex-direction: column !important;
+					row-gap: 5px !important;
+				}
+			}
+			@media (max-width: 751px) {
+				.cc_bmargin {
+					margin-bottom: 33px !important;
+				}
+			}
+			@media (max-width: 679px) {
+				.img_wide_caption {
+					width: 100% !important;
+					padding: 4px 0 0 0 !important;
+					border-radius: 0 !important;
+					text-align: center !important;
+					height: 32px !important;
+					margin-top: -41px !important;
+					overflow: hidden !important;
+				}
+				.imagesection {
+					height: 22rem !important;
+				}
+			}
+			@media (max-width: 595px) {
+				#topbar_menubuttons {
+					/*max-width: 100%;*/
+				}
+				#section1 p {
+					width: 100% !important;
+				}
+				#s1_leftright {
+					flex-direction: column !important;
+				}
+				#map {
+					width: 100% !important;
+					margin-left: 0 !important;
+					margin-top: 8px !important;
+				}
+				#map_dynamic {
+					width: 100% !important;
+				}
+				#container {
+					width: 100% !important;
+					height: 600px !important;
+					float: none !important;
+				}
+				.charts_sidebyside {
+					flex-direction: column !important;
+				}
+				.chartjsdiv {
+					max-width: none !important;
+					margin: unset !important;
+					width: unset !important;
+					height: 270px !important;
+				}
+				#map_2 {
+					width: 100% !important;
+				}
+				#references ul {
+					text-align: justify;
+				}
+				#footer {
+					font-size: 10pt;
+				}
+			}
+			@media (max-width: 435px) {
+				.cc_bmargin {
+					margin-bottom: 33px !important;
+				}
 			}
 			
 		</style>
@@ -313,13 +397,13 @@
 			<div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 100%">
 				
 				<h1 style="font-size: 26px; text-align: center;">A call for multi-disciplinary perspectives to combat deforestation of the Amazon rainforest</h1>
-				<div style="display: flex; flex-direction: row; column-gap: 10px; align-items: center;" id="topbar_menubuttons">
-					<a href="#section1">State level indicators</a>
-					<a href="#section2">Gridded variables</a>
-					<a href="#section3">Feedbacks and interactions</a>
-					<a href="#section4">Deforestation</a>
-					<a href="#section5">Process interactions</a>
-					<a href="#section6">Sensitivities</a>
+				<div style="display: flex; flex-direction: row; column-gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap;" id="topbar_menubuttons">
+					<a href="#section1" class="item">State level indicators</a>
+					<a href="#section2" class="item">Gridded variables</a>
+					<a href="#section3" class="item">Feedbacks and interactions</a>
+					<a href="#section4" class="item">Deforestation</a>
+					<a href="#section5" class="item">Process interactions</a>
+					<a href="#section6" class="item">Sensitivities</a>
 				</div>
 			</div>
 		</div>
@@ -350,7 +434,7 @@
 			
 			<div id="section1" class="section reveal">
 				<h2>State level indicators</h2>				
-				<div style="display: flex; flex-direction: row;">
+				<div id="s1_leftright" style="display: flex; flex-direction: row;">
 					<p style="width: 50%; margin: 0">
 						The Amazon is the largest tropical forest and offers many important ecosystem services, including the sequestration of substantial
 						amounts of carbon, recycling of moisture and supporting biodiversity. Although we refer to the ‘Amazon’	as a single ecosystem, 
@@ -481,7 +565,7 @@
 					and Tocantins, which is less heavily affected by deforestation.<br><br>
 					There is a clear wet and dry season for both states, and the peak deforestation occurs during the dry periods. 
 				</p>
-				<div style="display: flex; flex-direction; row;">
+				<div class="charts_sidebyside" style="display: flex; flex-direction; row;">
 					<div class="chartjsdiv">
 						<canvas id="dualaxisChart" width="100%" height="400px"></canvas>
 					</div>
@@ -493,7 +577,7 @@
 					In contrast, the annual patterns in deforestation do not have a clear relation to annual precipitation: whereas the deforestation has
 					substantial year-to-year variability (an increase for Rondônia, and a sudden drop after 2016 for Tocantins), the precipitation is relatively constant.
 				</p>
-				<div style="display: flex; flex-direction; row;">
+				<div class="charts_sidebyside" style="display: flex; flex-direction; row;">
 					<div class="chartjsdiv">
 						<canvas id="dualaxisChart3" width="100%" height="400px"></canvas>
 					</div>
@@ -1092,7 +1176,7 @@
 			var buttonpanelControl = L.control({position: 'bottomleft'});
 			buttonpanelControl.onAdd = function () {
 				  var div = L.DomUtil.create('div');
-				  div.innerHTML = '<div class="leaflet-bar custom-control" style="display: flex; flex-direction: column; align-items: center;"><div style="width: 100%; display: flex; justify-content: center;">2001-2021 (monthly mean)</div><div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; width: 100%;">						<span id="month" style="width: 20%;"> </span> <div><input id="loopcheckbox" name="loopcheckbox" type="checkbox" checked>						<label for="loopcheckbox">Loop</label></div><input type="button" value="Start" onclick="startStop(this)" />						</div><input id="monthslider" type="range" min="1" max="12" oninput="datumBeall(this.value)" style="width: 200px"/></div>';	
+				  div.innerHTML = '<div class="leaflet-bar custom-control cc_bmargin" style="display: flex; flex-direction: column; align-items: center; min-width: 200px; margin-bottom: 16px;"><div style="width: 100%; display: flex; justify-content: center;">2001-2021 (monthly mean)</div><div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; width: 100%;">						<span id="month" style="width: 20%;"> </span> <div><input id="loopcheckbox" name="loopcheckbox" type="checkbox" checked>						<label for="loopcheckbox">Loop</label></div><input type="button" value="Start" onclick="startStop(this)" />						</div><input id="monthslider" type="range" min="1" max="12" oninput="datumBeall(this.value)" style=""/></div>';	
 				  
 					L.DomEvent.disableClickPropagation(div);
 				  return div;

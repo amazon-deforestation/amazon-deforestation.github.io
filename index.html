@@ -706,7 +706,7 @@
 				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Precipitation: " + layer.feature.properties.precip_by_states_2001_2019_VAL.toFixed(3) + "</div>";
 			}
 			function tooltip_population(layer) {
-				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Population density: " + layer.feature.properties.population_average_population_average.toLocaleString() + " / km<sup>2</sup></div>";
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Population density: " + layer.feature.properties.population_average_population_average.toLocaleString() + " / km >2</sup></div>";
 			}
 			function tooltip_gdp(layer) {
 				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>GDP (R$ 1 billion): " + layer.feature.properties.gdp_average_gdp_average + "</div>";
@@ -1545,7 +1545,7 @@
 			map_2.on('baselayerchange', function (e) {
 				map_2.removeControl(legend_r2correl);
 				if (e.name === 'Slope ') {
-					setLegend_gradient_r2correl([-150, 5], 'km<sup>2</sup> per mm/day', chroma.scale(['#2166ac', '#67a9cf', '#d1e5f0', '#f7f7f7', '#fddbc7']).colors(5));
+					setLegend_gradient_r2correl([-150, 5], 'km<sup>2</sup>&nbsp;per mm/day', chroma.scale(['#2166ac', '#67a9cf', '#d1e5f0', '#f7f7f7', '#fddbc7']).colors(5));
 				} else if (e.name === 'R<sup>2</sup>') {
 					setLegend_gradient_r2correl([0.02, 0.905], '', chroma.scale(['#feebe2', '#fbb4b9', '#f768a1', '#c51b8a', '#7a0177']).colors(5));
 				} 

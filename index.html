@@ -1190,14 +1190,14 @@
 					
 			map_dynamic.on('baselayerchange', function (e) {
 				map.removeControl(legend_dyn);
-				if (e.name === 'Precipitation (mean)') {
+				if (e.name === 'Precipitation') {
 					if (layerNirv != null) {
 						layerNirv.hide();
 					}
 					dynamic_currentlayer = "precip";
 					loadTiffPrecip('data/meanmonths/precip_'+String(month).padStart(2, '0')+'.tif', true);
 					setLegend_gradient_dynamic([0, 0.085*1000], 'mm/day', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
-				} else if (e.name === 'NIRv (mean)') {
+				} else if (e.name === 'NIRv') {
 					/*if (layerPrecip != null) {
 						layerPrecip.hide();
 					}*/
@@ -1249,8 +1249,8 @@
 			var precip_range;
 			
 			var overlayMaps_dynamic = { 
-				/*"Precipitation (mean)": layerPrecip,
-				"NIRv (mean)": layerNirv*/
+				/*"Precipitation": layerPrecip,
+				"NIRv": layerNirv*/
 				};
 			
 			function loadTiffPrecip(filename, add) {
@@ -1300,7 +1300,7 @@
 					if (layerControl_dynamic == null) {
 						setLegend_gradient_dynamic([0, 0.085*1000], 'mm/day', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
 						// first run, add to map so we see by default, create layer switcher
-						Object.assign(overlayMaps_dynamic, { "Precipitation (mean)": layerPrecip, "NIRv (mean)": layerNirv }); 
+						Object.assign(overlayMaps_dynamic, { "Precipitation": layerPrecip, "NIRv": layerNirv }); 
 						layerControl_dynamic = L.control.layers(overlayMaps_dynamic, {"States": dynamicmap_stateborders}, {collapsed:false}).addTo(map_dynamic);
 					}
 				  
@@ -1362,11 +1362,11 @@
 					if (layerControl_dynamic == null) {
 						//setLegend_gradient_dynamic([0, 0.085], '', chroma.scale(['rgba(0,0,0,0)','rgba(0,0,255,0.5)', 'rgba(0,0,255,0.6)', 'rgba(0,0,255,0.7)' , 'rgba(0,0,255,0.82)' , 'blue']).colors(6), map_dynamic);
 						// first run, add to map so we see by default, create layer switcher
-						//Object.assign(overlayMaps_dynamic, { "NIRv (mean)": layerNirv }); 
-						//overlayMaps_dynamic = { "NIRv (mean)": layerNirv };
+						//Object.assign(overlayMaps_dynamic, { "NIRv": layerNirv }); 
+						//overlayMaps_dynamic = { "NIRv": layerNirv };
 						//layerControl_dynamic = L.control.layers(overlayMaps_dynamic, {"States": dynamicmap_stateborders}, {collapsed:false}).addTo(map_dynamic); 
 					}
-					//Object.assign(overlayMaps_dynamic, { "NIRv (mean)": layerNirv }); 
+					//Object.assign(overlayMaps_dynamic, { "NIRv": layerNirv }); 
 					//layerControl_dynamic = L.control.layers(overlayMaps_dynamic, {"States": dynamicmap_stateborders}, {collapsed:false}).addTo(map_dynamic); 
 				  
 				});		
@@ -1462,7 +1462,7 @@
 			/*
 			map_dynamic.on('baselayerchange', function (e) {
 				map_dynamic.removeControl(legend_dyn);
-				if (e.name === 'Precipitation (mean)') {
+				if (e.name === 'Precipitation') {
 					setLegend_gradient([0, 0.085], 'mm/day', chroma.scale(['black', 'orange']).colors(2), map_dynamic);
 				} 
 			});*/

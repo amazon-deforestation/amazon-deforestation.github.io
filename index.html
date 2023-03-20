@@ -706,7 +706,7 @@
 				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Precipitation: " + layer.feature.properties.precip_by_states_2001_2019_VAL.toFixed(3) + "</div>";
 			}
 			function tooltip_population(layer) {
-				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Population density: " + layer.feature.properties.population_average_population_average.toLocaleString() + " / km >2</sup></div>";
+				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>Population density: " + layer.feature.properties.population_average_population_average.toLocaleString() + " / km <sup>2</sup></div>";
 			}
 			function tooltip_gdp(layer) {
 				return "<div style='font-size:20px; margin-bottom: 2px'><b>" + layer.feature.properties.nome + "</b></div><div>GDP (R$ 1 billion): " + layer.feature.properties.gdp_average_gdp_average + "</div>";
